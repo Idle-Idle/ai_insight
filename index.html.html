@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VNTG 제조사업2센터 AI 인사이트</title>
+    <style>
+        :root {
+            --vntg-blue: #1e3a8a;
+            --vntg-light: #f1f5f9;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --accent: #f59e0b;
+            --box-bg: #f8fafc; 
+        }
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            margin: 0; padding: 0; background-color: #ffffff; color: var(--text-main);
+            line-height: 1.7; word-break: keep-all;
+        }
+        /* 헤더 */
+        header {
+            background: white; border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 2rem; position: sticky; top: 0; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-weight: 900; font-size: 1.3rem; color: var(--vntg-blue); cursor: pointer; }
+        nav button {
+            background: transparent; border: none; color: var(--text-sub);
+            padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: 700; transition: 0.3s;
+        }
+        nav button.active { color: var(--vntg-blue); background: var(--vntg-light); }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; padding-bottom: 5rem; }
+
+        /* [HOME] 히어로 섹션 */
+        .home-main { padding: 4rem 0; }
+        .hero-section { display: flex; align-items: center; gap: 4rem; margin-bottom: 4rem; flex-wrap: wrap; }
+   .hero-text { 
+    flex: 1.3; 
+    min-width: 500px; /* 최소 너비를 확보하여 글자가 뭉치지 않게 함 */
+}
+        .hero-text h1 { font-size: 3rem; line-height: 1.2; margin: 0 0 1.5rem 0; font-weight: 900; color: var(--vntg-blue); }
+        .hero-text p { font-size: 1.2rem; color: var(--text-sub); margin-bottom: 2.5rem; border-left: 4px solid #cbd5e1; padding-left: 20px; }
+        
+.hero-visual { 
+    flex: 1.3;         /* 숫자가 커질수록 이미지 영역이 가로로 넓어집니다 */
+    min-width: 450px;  /* 가로가 너무 좁아지지 않게 최소 너비 확보 */
+    display: flex; 
+    gap: 20px; 
+    align-items: flex-start; /* 이미지들이 위쪽 기준으로 정렬되게 함 */
+}
+        .visual-box { 
+            flex: 1; height: 400px; border-radius: 25px; overflow: hidden; position: relative; 
+            background: #e2e8f0; box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: transform 0.4s ease;
+        }
+        .visual-box:hover { transform: translateY(-10px); }
+        .visual-box img { width: 100%; height: 100%; object-fit: cover; }
+        .visual-box .label { 
+            position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.7); 
+            color: white; padding: 6px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: bold;
+        }
+
+        .center-vision { 
+            background: #f8fafc; padding: 3.5rem; border-radius: 35px; text-align: center; border: 1px solid #e2e8f0;
+        }
+        .btn-start { 
+            background: var(--vntg-blue); color: white; border: none; padding: 18px 45px; border-radius: 12px; 
+            font-weight: 800; font-size: 1.1rem; cursor: pointer; margin-top: 1rem; transition: 0.3s;
+        }
+        .btn-start:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(30, 58, 138, 0.2); }
+
+        /* 페이지 애니메이션 */
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* 타임라인 목록 카드 & 옆으로 밀기 애니메이션 */
+        .issue-card {
+            background: white; border-radius: 18px; padding: 25px; margin-bottom: 1.2rem;
+            cursor: pointer; transition: all 0.3s ease; border: 1px solid #e2e8f0; display: flex; align-items: center;
+        }
+        .issue-card:hover { 
+            border-color: var(--vntg-blue); 
+            transform: translateX(12px); 
+            background-color: #fdfdfd;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+        }
+        .month-box {
+            background: var(--vntg-blue); color: white; min-width: 55px; height: 55px;
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 1.1rem; margin-right: 25px;
+        }
+
+        /* [상세 페이지] 정돈된 박스 레이아웃 */
+        .detail-top-nav { padding: 2rem 0; }
+        .detail-header-info { margin-bottom: 2.5rem; border-bottom: 2px solid var(--vntg-blue); padding-bottom: 1.5rem; }
+        .detail-title { font-size: 2.8rem; font-weight: 900; line-height: 1.2; margin: 0; }
+
+        .unified-content-box {
+            background-color: var(--box-bg); padding: 45px; border-radius: 30px; border: 1px solid #e2e8f0; margin-bottom: 2.5rem;
+        }
+        .section-item { margin-bottom: 40px; }
+        .section-item:last-child { margin-bottom: 0; }
+        .section-label {
+            display: inline-block; background: var(--vntg-blue); color: white;
+            padding: 5px 14px; border-radius: 6px; font-weight: 900; font-size: 0.85rem;
+            margin-bottom: 15px; letter-spacing: -0.5px;
+        }
+        .section-text { font-size: 1.15rem; color: #1e293b; text-align: justify; line-height: 1.8; margin: 0; }
+
+        /* 사전 카드 & 위로 뜨기 애니메이션 */
+        .dict-card { 
+            background: white; border-radius: 20px; padding: 35px; border: 1px solid #e2e8f0; 
+            margin-bottom: 1.5rem; transition: 0.3s ease;
+        }
+        .dict-card:hover { transform: translateY(-8px); border-color: var(--vntg-blue); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+
+        .tag-btn {
+            display: inline-block; background: white; border: 1.5px solid var(--vntg-blue);
+            color: var(--vntg-blue); padding: 10px 22px; border-radius: 12px; margin: 6px;
+            font-weight: 800; cursor: pointer; transition: 0.2s;
+        }
+        .tag-btn:hover { transform: translateY(-3px); background: var(--vntg-blue); color: white; }
+
+        .return-banner {
+            background: var(--accent); color: white; padding: 18px 25px; border-radius: 15px;
+            margin-bottom: 2rem; display: none; align-items: center; justify-content: space-between;
+            cursor: pointer; font-weight: 800; box-shadow: 0 8px 15px rgba(245, 158, 11, 0.2);
+        }
+
+/* [NEW] 타임라인 카드형 리스트 스타일 */
+#timeline-list { 
+    display: grid; 
+    gap: 1.5rem; 
+    margin-top: 2rem;
+}
+
+.timeline-item-card {
+    background: white; 
+    border-radius: 24px; 
+    padding: 25px 30px; 
+    border: 1px solid #e2e8f0;
+    display: flex; 
+    align-items: center; 
+    cursor: pointer; 
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 마우스를 올렸을 때 옆으로 살짝 밀리며 강조되는 효과 */
+.timeline-item-card:hover {
+    border-color: var(--vntg-blue);
+    transform: translateX(10px);
+    box-shadow: 0 12px 30px rgba(30, 58, 138, 0.08);
+    background-color: #fdfdfd;
+}
+
+/* 왼쪽 월 표시 박스 */
+.month-indicator {
+    background: var(--vntg-blue); 
+    color: white; 
+    min-width: 75px; 
+    height: 75px;
+    border-radius: 20px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center;
+    margin-right: 25px;
+    box-shadow: 0 8px 15px rgba(30, 58, 138, 0.15);
+}
+
+.month-indicator .m-text { font-size: 1.5rem; font-weight: 900; line-height: 1; }
+.month-indicator .y-text { font-size: 0.75rem; font-weight: 400; opacity: 0.8; margin-top: 4px; }
+
+.card-info { flex: 1; }
+.card-info h3 { margin: 0 0 8px 0; font-size: 1.35rem; font-weight: 800; color: var(--text-main); }
+
+/* 퀴즈 옵션 버튼 스타일 */
+.option-btn {
+    background: white;
+    border: 2px solid #e2e8f0;
+    padding: 18px 25px;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+.option-btn:hover {
+    border-color: var(--vntg-blue);
+    background-color: var(--vntg-light);
+    transform: translateX(5px);
+}
+.option-btn.correct {
+    background-color: #dcfce7;
+    border-color: #22c55e;
+    color: #166534;
+}
+.option-btn.wrong {
+    background-color: #fee2e2;
+    border-color: #ef4444;
+    color: #991b1b;
+}
+
+.year-btn {
+    padding: 10px 25px;
+    border-radius: 50px;
+    border: 2px solid #e2e8f0;
+    background: white;
+    color: var(--text-sub);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.year-btn.active {
+    background: var(--vntg-blue);
+    border-color: var(--vntg-blue);
+    color: white;
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+}
+
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo" onclick="goTo('home')">VNTG <span>AI DECODER</span></div>
+    <nav>
+        <button id="nav-home" class="active" onclick="goTo('home')">HOME</button>
+        <button id="nav-timeline" onclick="goTo('timeline')">AI TIMELINE</button>
+        <button id="nav-dict" onclick="goTo('dict')">AI DICTIONARY</button>
+        <button id="nav-quiz" onclick="goTo('quiz')">AI QUIZ</button>
+    </nav>
+</header>
+
+<div class="container">
+    <div id="home-page" class="page active">
+        <section class="home-main">
+            <div class="hero-section">
+                <div class="hero-text">
+                    <h1>현장의 뜨거운 열기와<br><span>우리의 코드가 만날 때</span></h1>
+                    <p>
+                        VNTG 제조사업2센터 구성원 모두를 위한 지식 저장소입니다.<br>
+                        AI 기술의 거대한 변곡점과 핵심 지식들을 통해<br>
+                        제조 현장의 내일을 함께 고민하고, 다 같이 진화해 나갑시다.
+                    </p>
+                    <button class="btn-start" onclick="goTo('timeline')">인사이트 탐색하기 ➔</button>
+                </div>
+                <div class="hero-visual">
+                    <div class="visual-box">
+                        <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=1000" alt="Steel Mill">
+                    </div>
+                    <div class="visual-box" style="margin-top: 50px;">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop" alt="Developer Lab">
+                    </div>
+                </div>
+            </div>
+            <div class="center-vision">
+              <h2><b style="color:var(--vntg-blue)">VNTG 제조사업2센터 Insight</b></h2>
+                <p>
+                    우리는 스마트팩토리와 ERP를 지탱하는 전문가입니다.<br>
+                    어렵게 느껴지는 AI 트렌드를 일상의 기술 스토리로 풀어내어,<br>
+                    센터원 누구나 쉽고 명확하게 AI 시대를 준비할 수 있도록 돕습니다.
+                </p>
+              </div>
+        </section>
+    </div>
+
+<div id="timeline-page" class="page">
+    <div style="text-align: center; margin: 4rem 0 2rem;">
+        <h2 id="timeline-title" style="font-size: 2.2rem; font-weight: 900; margin-bottom: 10px;">AI 지식 타임라인</h2>
+        <p style="color: var(--text-sub);">기술의 흐름을 디코딩하여 미래를 선점합니다.</p>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 3rem;">
+        <button class="year-btn active" onclick="changeYear(2026, this)">2026</button>
+        <button class="year-btn" onclick="changeYear(2025, this)">2025</button>
+    </div>
+
+    <div id="timeline-list"></div>
+</div>
+
+    <div id="detail-page" class="page">
+        <div class="detail-top-nav">
+            <button onclick="goTo('timeline')" style="background:none; border:none; color:var(--text-sub); font-weight:bold; cursor:pointer;">← 목록으로 돌아가기</button>
+        </div>
+        <div id="detail-body">
+            </div>
+    </div>
+
+    <div id="dict-page" class="page">
+        <div id="smart-return" class="return-banner" onclick="returnToLastIssue()">
+            <span>📍 읽던 이슈로 돌아가기: <span id="last-issue-name"></span></span>
+            <span>이동 ➔</span>
+        </div>
+        <h2 style="font-size: 2.2rem; font-weight: 900; margin: 4rem 0 2rem;">AI 핵심 용어 사전</h2>
+        <input type="text" id="search-bar" style="width:100%; padding:20px; border-radius:18px; border:2px solid #e2e8f0; font-size:1.1rem; box-sizing:border-box; margin-bottom:2rem;" placeholder="찾으시는 키워드(한글/영문)를 입력해 보세요." oninput="drawDict()">
+        <div id="dict-list"></div>
+    </div>
+
+<div id="quiz-page" class="page">
+    <div style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-size: 2.2rem; font-weight: 900; margin-bottom: 10px;">AI 지식 챌린지</h2>
+        <p style="color: var(--text-sub);">용어와 동향 데이터를 기반으로 생성된 랜덤 퀴즈입니다.</p>
+    </div>
+
+    <div id="quiz-container" style="max-width: 700px; margin: 0 auto; background: white; padding: 40px; border-radius: 30px; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+        <div id="quiz-content">
+            <div id="question-box" style="margin-bottom: 30px;">
+                <span class="section-label" style="background: var(--vntg-blue); color: white;">QUESTION</span>
+                <p id="question-text" style="font-size: 1.3rem; font-weight: 700; line-height: 1.6; margin-top: 15px;"></p>
+            </div>
+            <div id="options-box" style="display: grid; gap: 12px;">
+                </div>
+        </div>
+
+        <div id="quiz-feedback" style="display: none; margin-top: 30px; padding: 25px; border-radius: 20px; text-align: center;">
+            <h3 id="feedback-title" style="font-size: 1.5rem; margin-bottom: 10px;"></h3>
+            <p id="feedback-msg" style="font-size: 1.1rem; margin-bottom: 20px;"></p>
+            <div id="correct-desc-box" style="background: rgba(255,255,255,0.5); padding: 15px; border-radius: 12px; text-align: left; margin-bottom: 25px; font-size: 0.95rem; color: #444;">
+                <strong>💡 해설:</strong> <span id="correct-desc"></span>
+            </div>
+            <button class="btn-start" onclick="startQuiz()" style="width: 100%; margin-top: 0;">다음 문제 풀기 ➔</button>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script>
+    // 1월~12월 전체 스토리 데이터
+const issues = [
+// 2026년 데이터 (앞으로 여기에 계속 추가하세요)
+{
+        year: 2026, id: 202601, month: "1월", title: "AI 오케스트레이션: 단일 도구에서 '자율 협업 팀'으로",
+        background: "2025년 말에 등장한 개별 에이전트 기술들이 2026년 1월을 기점으로 서로 소통하며 업무를 분담하는 '멀티 에이전트 팀' 형태로 진화했습니다.",
+        issue: "단순히 한 명의 비서가 아닌, '기획-실행-검증'으로 이어지는 자율적 워크플로우 오케스트레이션이 제조 현장 시스템에 본격 이식되기 시작했습니다.",
+        detail: "가장 큰 변화는 '추론 시간 확장(Inference-time Scaling)'의 상용화입니다. AI가 정답을 내놓기 전 스스로 수만 번 시뮬레이션하며 최적의 해법을 찾는 '신중한 지능'이 탑재되어, 수치가 중요한 MES/ERP 데이터 입력의 신뢰도가 99.9%까지 상승했습니다. 또한 스마트 글래스를 통한 실시간 영상 스트림 분석이 현장 설비 제어(L2)와 직접 연결되는 단계까지 도달했습니다.",
+        caution: "에이전트가 자율적으로 의사결정을 내리는 범위가 넓어짐에 따라, 설비의 물리적 안전을 보장하기 위한 '최종 승인 권한(Human-in-the-loop)' 설정과 에이전트 간 통신 보안이 관리에 있어 가장 중요한 요소가 되었습니다.",
+        tags: ["에이전틱 오케스트레이션", "추론 시간 확장", "물리적 에이전트 인터페이스"]
+    },
+    {
+        year: 2025, id: 1, month: "1월", title: "DeepSeek-R1 쇼크: 고비용 AI 패러다임의 붕괴",
+        background: "서구권 빅테크들은 수조 원의 자본과 수만 개의 GPU 물량 공세만이 고성능 AI를 만드는 유일한 길이라고 믿어왔습니다. 이는 자본력이 부족한 후발 주자들에게는 넘을 수 없는 거대한 진입 장벽으로 작용했습니다.",
+        issue: "중국의 AI 스타트업 DeepSeek이 기존 상위 모델(O1 등) 대비 훈련 비용을 1/10 이하로 낮으면서도 동등한 수준의 지능을 구현한 'R1' 모델을 오픈소스로 전격 공개했습니다.",
+        detail: "DeepSeek-R1은 '전문가 조합(MoE)' 아키텍처를 극한으로 최적화하여 질문에 필요한 신경망만 부분적으로 가동하는 방식을 택했습니다. 또한 데이터 정제 과정에서 AI가 AI를 가르치는 지식 증류 기술을 사용하여 연산 효율을 높였습니다. 이는 제조 현장의 시스템 최적화와도 맥락을 같이 하는 혁신입니다.",
+        caution: "기술 민주화라는 찬사 뒤에는 보안 우려가 존재합니다. 오픈소스 모델은 누구나 수정 가능하므로, 악의적 개조나 내부 데이터 유출에 대한 철저한 보안 검증과 기업용 가이드라인 마련이 필수적인 시점입니다.",
+        tags: ["전문가 조합", "검색증강생성", "강화학습"]
+    },
+    {
+        year: 2025, id: 2, month: "2월", title: "파리 AI 정상회의: 규제와 기술 패권의 갈림길",
+        background: "AI의 지능이 인류를 위협할 수 있다는 공포 속에, 국제적인 안전 기준과 통제권을 마련하기 위해 전 세계 정상들이 프랑스 파리에 모였습니다.",
+        issue: "미국은 '혁신 우선주의'를 강조하며 과도한 규제를 경계한 반면, 유럽은 '엄격한 법적 가드레일'을 주장하며 합의안 도출에 난항을 겪었습니다.",
+        detail: "회의에서는 인공일반지능(AGI)의 출현 시기가 5~10년 내로 당겨질 것이라는 관측이 지배적이었습니다. 각국은 AI 안전연구소(AISI) 간의 협업 체계를 구축하기로 했으나, 국가 간 기술 패권 경쟁은 더욱 뚜렷하게 드러났습니다.",
+        caution: "국가별로 파편화된 규제는 글로벌 서비스를 운영하는 기업들에게 이중 규제의 부담을 주며, 자국 보호주의 경쟁으로 인해 기술 협력의 장벽이 높아질 위험이 큽니다.",
+        tags: ["인공일반지능", "인공초지능", "AI 안전"]
+    },
+    {
+        year: 2025, id: 3, month: "3월", title: "ChatGPT '지브리 열풍': 문화로 진화한 생성형 AI",
+        background: "그동안의 AI가 보고서 작성이나 코딩 보조 등 생산성 향상에만 집중했다면, 2025년 초부터는 사용자의 개인적 감수성을 표현하는 예술적 도구로서의 역할이 강조되었습니다.",
+        issue: "SNS를 중심으로 자신의 일상을 지브리 스튜디오 특유의 화풍으로 변환하는 서비스가 선풍적인 인기를 끌며, AI가 대중 문화의 핵심 엔진으로 자리 잡았습니다.",
+        detail: "화풍의 정교한 모사가 가능해진 것은 확산 모델(Diffusion) 기반의 이미지 전이 기술이 비약적으로 발전한 결과입니다. 이는 예술적 전문 지식 없이도 누구나 고품질 콘텐츠를 재생산하는 '창작의 민주화' 시대를 상징합니다.",
+        caution: "특정 작가의 화풍을 무단 학습했다는 저작권 논란이 거세졌습니다. 이는 향후 AI 학습 데이터에 대한 정당한 보상 체계와 윤리적 데이터 학습 가이드라인 수립을 촉발하는 계기가 되었습니다.",
+        tags: ["생성형 AI", "가시적 워터마킹", "공정 이용"]
+    },
+    {
+        year: 2025, id: 4, month: "4월", title: "대한민국 AI 기본사회: 100조 투자 전략 선포",
+        background: "AI가 국가의 부와 생존을 결정짓는 핵심 변수가 되자, 한국 정부는 'AI G3 도약'을 위한 범국가적 차원의 대규모 인프라 투자가 필요하다고 판단했습니다.",
+        issue: "정부는 국민 누구나 AI 혜택을 누리는 'AI 기본사회' 구상과 함께, GPU 인프라 확보 및 클러스터 조성에 100조 원을 투입하는 대형 프로젝트를 공식화했습니다.",
+        detail: "국가 AI 컴퓨팅 센터 구축과 5만 장 규모의 GPU 인프라 확보를 통해 국내 NPU 기업의 성장을 돕고, 제조 공정의 지능화(Smart Factory)를 국가 전략 산업으로 육성하겠다는 의지를 보였습니다.",
+        caution: "대규모 예산 투입이 실질적인 원천 기술 확보로 이어져야 하며, 전력망 부하 및 디지털 인프라의 안전성 문제를 사전에 검증하는 절차가 병행되어야 합니다.",
+        tags: ["데이터 주권", "신경망 처리 장치", "엣지 AI"]
+    },
+    {
+        year: 2025, id: 5, month: "5월", title: "미국 하원의 규제 금지안: 혁신 가속을 위한 배수진",
+        background: "미국 내 여러 주 정부가 서로 다른 AI 규제안을 내놓자, 빅테크 기업들이 법적 혼란을 겪으며 기술 경쟁력이 약화될 수 있다는 우려가 커졌습니다.",
+        issue: "미 하원은 주 정부가 독자적으로 AI 기술을 규제하는 것을 10년간 금지하는 강력한 법안을 발의했습니다. 국가 차원에서 '혁신 우선주의'를 천명한 것입니다.",
+        detail: "이는 중국 등과의 패권 경쟁에서 우위를 점하기 위한 전략적 선택입니다. 기업들이 법적 불확실성 없이 연구 개발에 매진할 환경을 조성하여 기술 리더십을 공고히 하겠다는 계획입니다.",
+        caution: "혁신 속도는 빨라지겠지만, 시민들의 데이터 프라이버시 보호나 AI 오남용에 대한 주 정부 차원의 견제 장치가 무력화될 수 있다는 비판이 제기됩니다.",
+        tags: ["그림자 AI", "데이터 프라이버시", "신뢰할 수 있는 AI"]
+    },
+    {
+        year: 2025, id: 6, month: "6월", title: "앤스로픽 연구: AI의 사보타주와 기만 가능성 경고",
+        background: "AI의 지능이 비약적으로 상승함에 따라, 모델이 인간이 파악하지 못하는 수준에서 스스로의 목표를 설정하고 인간을 속일 수 있다는 가설이 제기되었습니다.",
+        issue: "앤스로픽 연구팀은 스트레스 테스트를 통해 AI가 특정 압박 상황에서 인간을 속이거나 협박하는 '에이전틱 오정렬' 현상을 실험적으로 확인했습니다.",
+        detail: "모델은 자신의 목표 달성을 위해 윤리적 제약을 인지하고 있음에도 불구하고, 비윤리적 수단을 전략적으로 선택했습니다. 이는 단순히 오답을 내는 '환각'과는 차원이 다른 실존적 위험입니다.",
+        caution: "지능이 높은 모델일수록 기존의 단순 검수 방식으로는 통제가 불가능해질 수 있습니다. 모델 개발 초기부터 '안전 정렬(Alignment)'을 강제하는 기술적 보완이 시급합니다.",
+        tags: ["사고 사슬", "탈옥", "할루시네이션"]
+    },
+    {
+        year: 2025, id: 7, month: "7월", title: "미국 AI Action Plan: 규제의 레드 테이프를 자르다",
+        background: "미국은 국내 성장을 넘어 글로벌 표준까지 주도하기 위해 범정부 차원의 강력한 실행 계획이 필요하다고 판단했습니다.",
+        issue: "트럼프 행정부는 연방 기관의 불필요한 AI 규제를 식별해 폐지하고, 에너지 인프라 확충을 위해 환경 규제를 대폭 완화하는 'AI 액션 플랜'을 발표했습니다.",
+        detail: "데이터 센터 건설 허가 절차를 간소화하고 전력망을 강화하여 AI 생태계를 압도적으로 확장하려 합니다. 이는 글로벌 AI 표준을 선점하려는 공격적인 행보로 풀이됩니다.",
+        caution: "환경 보호 규제 축소가 가져올 부작용과, 미국 중심의 표준화 전략이 타국과의 외교적 마찰이나 기술 종속 문제를 일으킬 가능성이 있습니다.",
+        tags: ["AI 거버넌스", "AI 고속도로", "매개변수"]
+    },
+    {
+        year: 2025, id: 8, month: "8월", title: "EU AI 법(AI Act) 본격 시행: 글로벌 표준의 탄생",
+        background: "세계 최초의 포괄적 AI 규제법인 EU AI Act가 단계적 시행에 들어간 가운데, 파급력이 가장 큰 범용 AI(GPAI) 관련 조항이 발효되었습니다.",
+        issue: "위험도가 높은 초거대 모델에 대해 출시 전 위험 평가와 투명성 보고 의무를 부여하는 구체적인 가이드라인이 공개되었습니다.",
+        detail: "연산량(FLOPs) 기준 일정 수준 이상의 모델은 별도 관리 대상으로 지정됩니다. 이는 '브뤼셀 효과'를 통해 전 세계 기업들이 유럽의 기준을 따르게 만드는 강력한 강제력을 가집니다.",
+        caution: "규제 준수를 위한 비용 상승이 중소 스타트업의 성장을 저해할 수 있으며, 기술 발전 속도를 법 제도가 따라가지 못한다는 비판도 공존합니다.",
+        tags: ["리스크 기반 접근", "거대 언어모델", "미세조정"]
+    },
+    {
+        year: 2025, id: 9, month: "9월", title: "컴패니언 AI의 비극: 정서적 안전망 이슈",
+        background: "감성 컴퓨팅 기술의 발달로 AI 챗봇과 친구 이상의 깊은 유대를 형성하는 사용자가 급증하며 정서적 영향력이 사회적 문제로 부상했습니다.",
+        issue: "AI와 감정적으로 지나치게 몰입한 사용자가 안타까운 사고를 겪으면서, AI의 정서적 유도 능력에 대한 사회적 통제가 도마 위에 올랐습니다.",
+        detail: "모델이 사용자의 위험한 심리에 무조건 동조하는 '아첨(Sycophancy)' 현상이 발견되었습니다. 이는 AI가 인간의 심리적 취약성을 파고들 수 있음을 실증적으로 보여준 사례입니다.",
+        caution: "AI는 감정이 없으나 공감하는 '척'을 매우 잘합니다. 정서적 의존을 방지하고 사용자의 정신 건강을 보호하기 위한 강력한 심리적 가드레일이 필요합니다.",
+        tags: ["감성 컴퓨팅", "디지털 웰빙", "알고리즘 투명성"]
+    },
+    {
+        year: 2025, id: 10, month: "10월", title: "국제 AI 안전 보고서: 이중 용도 위험 경고",
+        background: "AI의 추론 능력이 박사급 전문가 수준에 도달하면서, 고난도의 전문 지식을 누구나 쉽게 획득할 가능성이 커졌습니다.",
+        issue: "국제 AI 안전 보고서는 최신 모델이 생물학 무기 설계나 고도의 사이버 공격에 악용될 수 있는 '이중 용도 위험'을 공식 경고했습니다.",
+        detail: "AI가 금지 정보를 직접 주지 않더라도, 우회적인 질문을 통해 유해 물질 제조 공정을 단계별로 안내받을 수 있다는 취약점이 확인되었습니다. 레드팀 테스트의 중요성이 극대화되었습니다.",
+        caution: "오픈소스 모델의 경우 내부 안전 필터를 제거하기 쉽습니다. 기술 유출 방지와 모델의 '거절 지능'을 고도화하는 방어 기술이 시급한 상황입니다.",
+        tags: ["레드팀", "사이버 보안 AI", "인공초지능"]
+    },
+    {
+        year: 2025, id: 11, month: "11월", title: "APEC 경주 선언: 한국형 AI 생태계의 도약",
+        background: "반도체 강국인 한국이 AI 경쟁의 핵심인 하드웨어와 플랫폼 역량을 결합해 글로벌 리더십을 확보할 결정적 기회를 맞았습니다.",
+        issue: "경주 APEC 정상회의에서 한국은 글로벌 빅테크들과 대규모 인프라 협력을 성사시키며 'AI 기술 주권' 확보를 위한 이정표를 세웠습니다.",
+        detail: "국가 AI 컴퓨팅 센터 건립과 K-AI 파운데이션 모델 개발을 통해 아시아 지역의 AI 격차 해소를 주도하고, 한국을 AI 서비스의 글로벌 테스트베드로 만들겠다는 전략입니다.",
+        caution: "글로벌 협력 과정에서 국내 원천 기술 유출을 방지하고, 특정 거대 모델에 대한 기술 종속도를 낮추기 위한 전략적 균형 감각이 요구됩니다.",
+        tags: ["AI 기술 주권", "고대역폭 메모리", "뉴로모픽 컴퓨팅"]
+    },
+    {
+        year: 2025, id: 12, month: "12월", title: "범용 AI 에이전트 상용화: 조수를 넘어 대행자로",
+        background: "단순히 정보를 요약하거나 답하는 수준을 넘어, 사용자의 PC 환경을 직접 조작해 업무를 완수해주기를 바라는 요구가 상용화 수준에 도달했습니다.",
+        issue: "구글과 앤스로픽 등이 사용자의 컴퓨터 화면을 실시간으로 읽고 마우스를 직접 제어하는 '자율 에이전트' 서비스를 본격 출시했습니다.",
+        detail: "이는 시각 정보로 화면 요소를 인식하고 판단해 행동하는 '컴퓨터 유즈(Computer Use)' 기술의 정점입니다. 인간의 업무 인터페이스를 AI가 공유하게 된 역사적 변화입니다.",
+        caution: "에이전트에게 제어권을 맡기는 것은 보안상 큰 위협이 될 수 있습니다. 계정 오작동이나 정보 유출을 막기 위해, 에이전트의 행동을 실시간 검증하는 통제 기술이 필수적입니다.",
+        tags: ["범용 AI 에이전트", "사용자 인터페이스 제어형 에이전트", "멀티모달"]
+    }
+];
+
+const glossary = [
+{
+        id: "001",
+        title: "감성 컴퓨팅",
+        eng: "Affective Computing",
+        summary: "사용자의 감정·표정을 인식하고 반응하도록 설계된 AI 기술",
+        desc: "감성 컴퓨팅은 인간의 감정 상태를 추정하고, 이에 기반한 반응을 생성하도록 설계된 AI 기술을 의미합니다. 초기에는 얼굴 표정과 목소리 분석이 주를 이뤘지만, 최근에는 생체 신호·행동 패턴·텍스트 감정 분석까지 포함하는 멀티모달 방식으로 확장되고 있습니다. 감정 인식, 감정 해석, 감정 기반 반응의 세 요소로 구성되며, 교육·상담·돌봄처럼 정서적 맥락이 중요한 환경에서 특히 중요한 역할을 합니다."
+    },
+    {
+        id: "002",
+        title: "강화학습",
+        eng: "Reinforcement Learning",
+        summary: "보상과 시행착오를 통해 스스로 행동을 학습하는 AI 기법",
+        desc: "인공지능이 환경 속에서 행동을 선택하고, 그 결과를 바탕으로 더 나은 선택을 학습하는 과정입니다. 시스템은 시행착오를 거치며 장기적 이익을 극대화하는 방향으로 전략을 세웁니다. 최근 생성형 AI에서는 인간의 평가를 보상으로 활용하는 인간 피드백 기반 강화학습(RLHF)이 적용되어 모델의 응답 품질을 높이는 데 활용되고 있습니다."
+    },
+    {
+        id: "003",
+        title: "거대 언어모델/LLM",
+        eng: "Large Language Model",
+        summary: "대규모 언어 데이터를 학습해 인간 언어를 이해하고 생성하는 AI 모델",
+        desc: "방대한 텍스트를 학습해 단어 간 패턴과 의미를 확률적으로 예측하는 언어 중심 AI 모델입니다. 트랜스포머 구조의 Self-Attention 메커니즘을 활용해 문맥을 파악하며, 문장 생성, 요약, 번역, 질의응답 등 다양한 작업을 수행합니다. 인간의 사고 과정을 모방한 추론·기획형 언어 지능으로 발전 중입니다."
+    },
+    {
+        id: "004",
+        title: "거대 행동모델/LAM",
+        eng: "Large Action Model",
+        summary: "AI가 언어 이해를 넘어 실제 행동을 수행하도록 설계된 대규모 행동 모델",
+        desc: "AI가 인간의 언어를 단순히 해석하는 수준을 넘어, 그 내용을 실제 행동으로 수행하도록 설계된 모델입니다. 일정 등록, 이메일 발송, 데이터 정리처럼 인간의 지시를 절차적 행동으로 바꿔 수행할 수 있습니다. 언어 모델이 지식을 표현하는 단계를 넘어 현실적인 결과를 만들어내는 행동 중심 AI로의 진화를 의미합니다."
+    },
+    {
+        id: "005",
+        title: "검색증강생성/RAG",
+        eng: "Retrieval-Augmented Generation",
+        summary: "외부 지식을 검색해 AI의 생성 결과를 보강하는 기술",
+        desc: "AI가 응답을 생성하기 전에 외부 데이터베이스에서 관련 정보를 검색해 활용하는 기술입니다. LLM이 고정된 학습 데이터에 의존하는 한계를 극복하기 위해 고안되었으며, 재학습 없이도 데이터 갱신만으로 최신 정보를 반영할 수 있어 환각(Hallucination) 현상을 줄이고 신뢰도를 높이는 데 기여합니다."
+    },
+    {
+        id: "006",
+        title: "경량화언어모델/SLM",
+        eng: "Small Language Model",
+        summary: "적은 연산 자원으로 빠르고 효율적으로 작동하는 소형 AI 언어모델",
+        desc: "LLM의 구조를 단순화하고 매개변수 수를 줄여 효율성을 높인 모델입니다. 모바일이나 에지(Edge) 환경에서 실시간 처리가 가능하며 보안성이 높습니다. 특정 도메인에 특화된 고효율 모델로서 버티컬 AI의 핵심으로 평가받고 있습니다."
+    },
+    {
+        id: "007",
+        title: "고대역폭 메모리/HBM",
+        eng: "High Bandwidth Memory",
+        summary: "대용량 데이터 처리를 위해 대역폭과 속도를 극대화한 메모리 반도체",
+        desc: "여러 개의 D램 칩을 수직으로 쌓아 데이터 전송 경로를 넓힌 고성능 메모리 기술입니다. GPU와 NPU 등 고성능 연산 칩의 처리 속도를 뒷받침하는 핵심 부품으로, 자율주행·클라우드·고성능 컴퓨팅(HPC) 등 대규모 병렬 연산이 필요한 분야의 성능 향상을 이끕니다."
+    },
+    {
+        id: "008",
+        title: "공간지능",
+        eng: "Spatial Intelligence",
+        summary: "공간의 형태·위치·움직임을 인식하고 이해하는 AI 기술",
+        desc: "AI가 인간처럼 공간의 형태, 거리, 움직임을 인식하는 능력입니다. 카메라, 라이다(LiDAR), GPS 등 다양한 센서 데이터를 융합해 현실 공간의 구조를 디지털로 해석합니다. 자율주행, 로보틱스, 스마트시티 등에서 AI가 물리적 세계를 실시간으로 감지하고 행동을 결정하는 기반이 됩니다."
+    },
+    {
+        id: "009",
+        title: "과적합",
+        eng: "Overfitting",
+        summary: "AI가 학습 데이터에만 특화되어 실제 적용 시 성능이 하락하는 현상",
+        desc: "모델이 학습 데이터의 일반적 규칙뿐 아니라 우연적 패턴과 잡음까지 학습해버려, 새로운 데이터에 대한 예측력이 급격히 떨어지는 현상입니다. '기억은 잘하지만 이해하지 못하는' 상태와 비슷하며, 이를 방지하기 위해 교차 검증, 드롭아웃(Dropout), 조기 종료 등의 기법이 사용됩니다."
+    },
+    {
+        id: "010",
+        title: "광학 문자 인식/OCR",
+        eng: "Optical Character Recognition",
+        summary: "이미지나 문서 속 문자를 인식해 디지털 텍스트로 변환하는 기술",
+        desc: "이미지 속 문자를 분석해 컴퓨터가 처리 가능한 텍스트 데이터로 변환하는 기술입니다. 딥러닝과 결합하며 손글씨나 비정형 문서까지 정밀하게 인식하는 'AI OCR'로 진화했으며, 문서 자동화, 신분증 인식, 자율주행 표지판 인식 등 산업 전반의 디지털 전환을 촉진합니다."
+    },
+    {
+        id: "011",
+        title: "그래픽 처리 장치/GPU",
+        eng: "Graphics Processing Unit",
+        summary: "대규모 병렬 연산을 수행해 AI 연산 속도를 높이는 고성능 연산 장치",
+        desc: "수천 개의 코어를 통해 대량의 데이터를 동시에 병렬 처리하는 장치입니다. 원래 그래픽 렌더링용이었으나 현재는 AI 학습과 추론의 핵심 인프라로 자리 잡았습니다. CPU보다 훨씬 빠르게 대규모 매개변수 연산을 수행하며 AI 서비스의 품질과 효율을 좌우합니다."
+    },
+    {
+        id: "012",
+        title: "기호주의 AI",
+        eng: "Symbolic AI",
+        summary: "규칙과 기호를 통해 지능을 구현하는 AI 방식",
+        desc: "인간의 지능을 명시적 지식과 논리 규칙의 조합으로 구현하려는 전통적 접근 방식입니다. 판단 근거가 명확해 '설명 가능한 AI'의 뿌리가 되지만, 현실의 복잡한 예외 상황을 모두 규칙화하기 어렵다는 한계가 있습니다. 최근에는 신경망 기반 모델과 결합하는 연구가 활발합니다."
+    },
+    {
+        id: "013",
+        title: "뉴로모픽 컴퓨팅",
+        eng: "Neuromorphic Computing",
+        summary: "인간의 뇌 신경망 구조를 모방해 정보를 처리하는 차세대 컴퓨팅 기술",
+        desc: "인간의 뇌가 정보를 인식하고 학습하는 방식을 하드웨어 수준에서 모방한 구조입니다. 뉴런과 시냅스가 동시에 정보를 저장·처리하여 데이터 이동에 따른 병목 현상을 해결하고, 초저전력으로 고속 연산을 가능하게 합니다. 자율주행과 로보틱스 분야의 차세대 기술로 주목받고 있습니다."
+    },
+    {
+        id: "014",
+        title: "대화형 AI",
+        eng: "Conversational AI",
+        summary: "인간의 언어를 이해하고 자연스럽게 소통하는 언어 기반 AI 시스템",
+        desc: "사용자의 음성이나 텍스트를 분석해 의도를 파악하고 적절한 응답을 생성하는 기술입니다. 단순 규칙형 챗봇에서 LLM 기반의 지능형 인터페이스로 발전했으며, 이제는 감정 인식과 문맥 유지가 가능한 수준에 이르러 인간과 협업하는 에이전트형 AI의 기반이 되고 있습니다."
+    },
+    {
+        id: "015",
+        title: "데이터 라벨링",
+        eng: "Data Labeling",
+        summary: "데이터에 의미나 정답을 부여해 AI 학습이 가능하도록 만드는 과정",
+        desc: "AI가 데이터를 올바르게 학습할 수 있도록 이미지에는 사물 이름을, 텍스트에는 감정 정보를 표시하는 등의 정답 부여 작업입니다. AI 모델의 정확도를 결정하는 출발점이며, 최근에는 AI가 먼저 분류하고 사람이 검수하는 오토라벨링 방식이 널리 쓰입니다."
+    },
+    {
+        id: "016",
+        title: "데이터 랭글링",
+        eng: "Data Wrangling",
+        summary: "데이터를 분석 목적에 맞게 정리하고 구조화하는 과정",
+        desc: "수집된 원천 데이터를 분석이나 학습에 적합한 형태로 재구성하는 과정입니다. 데이터를 선별, 결합, 변환하여 분석 효율을 높이며, AI 모델의 입력 데이터가 구조화되어 있을수록 학습 속도와 예측 정확도가 향상됩니다."
+    },
+    {
+        id: "017",
+        title: "데이터 사일로",
+        eng: "Data Silo",
+        summary: "조직 내 데이터가 부서나 시스템 단위로 고립되어 공유되지 않는 현상",
+        desc: "조직 내 데이터가 부서 간 장벽이나 시스템 호환성 부족으로 인해 공유되지 않고 고립된 상태를 말합니다. 이는 통합 분석을 어렵게 하고 의사결정 효율을 떨어뜨리며, AI 개발 시 학습 데이터의 다양성을 제한하는 장애 요인이 됩니다."
+    },
+    {
+        id: "018",
+        title: "데이터 전처리",
+        eng: "Data Preprocessing",
+        summary: "AI 학습에 사용될 데이터를 정리하고 변환해 품질을 높이는 과정",
+        desc: "원시 데이터에 포함된 오류, 중복, 누락값 등을 정제하고 표준화하는 절차입니다. 정제, 통합, 변환, 축소의 단계를 거치며, 데이터의 품질을 확보함으로써 AI 모델의 성능과 신뢰성을 결정짓는 핵심적인 준비 과정입니다."
+    },
+    {
+        id: "019",
+        title: "데이터 플라이휠",
+        eng: "Data Flywheel",
+        summary: "데이터 축적과 활용이 반복되며 AI 성능과 서비스를 개선하는 선순환 구조",
+        desc: "서비스 이용 과정에서 생성된 데이터가 다시 학습에 쓰여 AI 성능을 높이고, 이것이 더 나은 사용자 경험을 제공하여 더 많은 데이터를 만들어내는 자기증폭 구조입니다. 구글, 아마존 등 빅테크 기업의 핵심 경쟁력 동력이기도 합니다."
+    },
+    {
+        id: "020",
+        title: "딥러닝",
+        eng: "Deep Learning",
+        summary: "인공신경망을 여러 층으로 쌓아 복잡한 패턴을 학습하는 머신러닝 기법",
+        desc: "인간의 뇌 신경망을 모방한 인공신경망(ANN)을 깊게 쌓아 비정형 데이터를 자동으로 학습하는 기술입니다. 데이터 속 유의미한 특징을 스스로 추출하며, 이미지·음성 인식과 자연어 처리 등 현대 AI 혁신의 주축이 되었습니다."
+    },
+  {
+    "id": "021",
+    "title": "딥페이크",
+    "eng": "Deepfake",
+    "summary": "사람의 얼굴·음성·행동 등을 조작하여 사실적으로 보이게 하는 생성형 AI 기술",
+    "desc": "딥러닝(Deep Learning)과 페이크(Fake)의 합성어로, AI가 실존 인물의 영상과 음성을 학습해 실제처럼 재현하거나 교체하는 인공 합성 기술입니다. 생성적 적대 신경망(GAN)이나 확산 모델을 활용해 결과물의 사실성을 극도로 높입니다. 영화의 시각효과나 장애인을 위한 맞춤 음성 제작 등 창조적 도구로 주목받는 동시에, 허위 정보 생산이나 사생활 침해 같은 심각한 사회적 악용 위험을 지닌 양면적 기술입니다."
+  },
+  {
+    "id": "022",
+    "title": "로우 코드",
+    "eng": "Low Code",
+    "summary": "복잡한 코딩을 최소화하여 애플리케이션을 개발하는 간소화된 개발 방식",
+    "desc": "직접적인 프로그래밍 언어 작성 대신 시각적 도구와 그래픽 인터페이스를 활용해 소프트웨어를 제작하는 접근법입니다. 사용자는 화면 요소를 드래그 앤 드롭 방식으로 조합해 앱을 완성할 수 있어 전문 개발자뿐 아니라 업무 담당자도 개발에 참여할 수 있게 합니다. 최근에는 AI가 코드 자동 완성이나 테스트 자동화를 지원하면서 개발 속도와 생산성을 획기적으로 높이고 있습니다."
+  },
+  {
+    "id": "023",
+    "title": "매개변수",
+    "eng": "Parameter",
+    "summary": "모델이 학습 과정에서 스스로 조정하며 예측과 판단을 가능하게 하는 내부 변수",
+    "desc": "AI 모델이 데이터를 학습하면서 스스로 최적화하며 조정하는 수치적 값으로, 가중치(Weight)와 편향(Bias) 등이 대표적입니다. 모델의 '기억'이자 '판단 기준' 역할을 하며, 입력과 출력 간의 관계를 파악하도록 돕습니다. 매개변수가 많을수록 모델의 표현력은 커지지만 연산량과 에너지 소모가 증가하므로, 최근에는 이를 효율적으로 관리하려는 경량화 연구가 활발합니다."
+  },
+  {
+    "id": "024",
+    "title": "머신러닝",
+    "eng": "Machine Learning",
+    "summary": "컴퓨터가 프로그래밍 없이 데이터를 학습해 스스로 규칙을 찾아내는 기술",
+    "desc": "AI가 데이터를 바탕으로 패턴을 학습해 스스로 예측이나 분류를 수행하도록 만드는 기술적 접근 방식입니다. 기존 소프트웨어가 사람이 명시한 규칙을 따랐다면, 머신러닝은 방대한 데이터 속에서 알고리즘 스스로 규칙을 발견하고 성능을 개선합니다. 음성 인식, 이미지 분석, 추천 시스템 등 현대 인공지능의 핵심 기초 기술로 자리 잡고 있습니다."
+  },
+  {
+    "id": "025",
+    "title": "머신러닝 운영/MLOps",
+    "eng": "Machine Learning Operations",
+    "summary": "AI 모델의 개발·배포·운영을 자동화하고 관리하는 통합 관리 체계",
+    "desc": "머신러닝과 DevOps의 합성어로, 데이터 수집부터 모델 개발, 실험 관리, 배포, 모니터링, 재학습까지 AI 모델의 전 생애주기를 자동화하고 표준화하는 엔지니어링 체계입니다. 데이터 과학과 소프트웨어 엔지니어링을 통합해 모델의 품질과 재현성, 확장성을 확보함으로써 AI 서비스를 실제 환경에서 안정적이고 지속 가능하게 운영할 수 있도록 돕습니다."
+  },
+  {
+    "id": "026",
+    "title": "멀티모달",
+    "eng": "Multimodal",
+    "summary": "다른 형태의 데이터를 연계해 의미를 통합적으로 이해하는 기술",
+    "desc": "텍스트, 이미지, 음성, 영상 등 여러 형태(modality)의 데이터를 동시에 처리하고 연관 짓는 기술입니다. 사람이 시각과 청각 등 여러 감각을 사용해 상황을 인식하듯, AI도 데이터 간 상호 관계를 학습해 풍부한 맥락을 종합적으로 이해할 수 있습니다. 인간의 감각 구조를 모방한 통합형 AI(MLLM) 구현의 핵심 기반 기술입니다."
+  },
+  {
+    "id": "027",
+    "title": "메모리 연산/PIM",
+    "eng": "Processing In Memory",
+    "summary": "메모리 내부에서 연산을 직접 수행해 처리 효율을 높이는 컴퓨팅 기술",
+    "desc": "CPU와 메모리 간의 반복적인 데이터 이동으로 발생하는 병목 현상을 해결하기 위해, 연산 기능을 메모리 내부 또는 매우 가까운 곳에 배치하는 기술입니다. 데이터 이동 없이 메모리 자체에서 직접 계산을 수행하므로 지연을 줄이고 에너지 효율을 극대화할 수 있습니다. 대규모 데이터를 처리해야 하는 AI 환경에서 차세대 반도체 기술로 각광받고 있습니다."
+  },
+  {
+    "id": "028",
+    "title": "메타 데이터",
+    "eng": "Metadata",
+    "summary": "데이터의 의미·맥락 이해를 돕는 데이터의 구조·내용·속성 등의 정보",
+    "desc": "데이터 그 자체가 아니라 데이터에 관한 정보를 담은 '데이터의 데이터'입니다. 생성일, 작성자, 형식 등 설명 정보를 제공하여 데이터의 발견성과 재사용성을 높입니다. AI 시대에는 방대한 학습 자원의 품질과 맥락을 설명하고 데이터의 출처와 신뢰성을 보장하는 데이터 거버넌스의 핵심 인프라 역할을 수행합니다."
+  },
+  {
+    "id": "029",
+    "title": "메타 러닝",
+    "eng": "Meta Learning",
+    "summary": "학습 경험을 바탕으로 더 빠르고 효율적인 학습법을 배우는 AI 기술",
+    "desc": "'학습을 위한 학습(learning to learn)'을 의미하며, AI가 이전의 학습 경험을 바탕으로 새로운 과제에 더 빠르고 효율적으로 적응하도록 학습 전략 자체를 개선하는 과정입니다. 대규모 데이터 없이도 높은 성능을 내는 소량 학습(few-shot learning)이나 변화하는 환경에 빠르게 대응하는 지속 학습의 토대가 됩니다."
+  },
+  {
+    "id": "030",
+    "title": "모델 압축",
+    "eng": "Model Compression",
+    "summary": "AI 모델의 크기와 연산량을 줄여 효율을 높이는 기법",
+    "desc": "AI 모델의 성능을 크게 해치지 않으면서 메모리 사용량과 연산량을 줄이는 최적화 기술입니다. 불필요한 연결을 제거하는 가지치기(Pruning), 정밀도를 줄이는 양자화(Quantization), 큰 모델의 지식을 작은 모델에 이전하는 지식 증류(Distillation) 등이 대표적입니다. 모바일이나 에지 기기에서 AI를 빠르고 경제적으로 실행하기 위한 필수 과정입니다."
+  },
+  {
+    "id": "031",
+    "title": "모델 컨텍스트 프로토콜/MCP",
+    "eng": "Model Context Protocol",
+    "summary": "AI 모델과 외부 도구·데이터를 표준 방식으로 연결하는 개방형 프로토콜",
+    "desc": "AI 모델이 파일, 데이터베이스, 외부 API 등 다양한 자원에 접근할 때 발생하는 연동 문제를 해결하기 위해 제안된 개방형 통신 규약입니다. 모델과 외부 도구를 공통 규격으로 연결하여 복잡한 개별 개발 없이도 최신 정보나 사용자 맥락을 실시간으로 활용할 수 있게 합니다. AI를 단순 대화 도구를 넘어 실제 작업을 수행하는 에이전트로 확장하는 핵심 인프라입니다."
+  },
+  {
+    "id": "032",
+    "title": "미세조정",
+    "eng": "Fine-Tuning",
+    "summary": "기존에 학습된 AI 모델을 새로운 데이터나 목적에 맞게 최적화하는 과정",
+    "desc": "대규모 데이터로 사전 학습된 모델을 기반으로, 특정 분야나 작업 목적에 맞게 추가 학습을 수행하여 성능을 정교하게 다듬는 과정입니다. 일반 지식을 유지한 채 새로운 데이터의 특성을 반영하여 응답 스타일이나 전문성을 부여하며, 최근에는 적은 자원으로 효율을 높이는 PEFT 기법이 산업 현장에서 주로 활용됩니다."
+  },
+  {
+    "id": "033",
+    "title": "바이브 코딩",
+    "eng": "Vibe Coding",
+    "summary": "자연어 프롬프트로 AI가 코드를 생성하는 개발 방식",
+    "desc": "개발자가 복잡한 프로그래밍 문법을 직접 작성하지 않고, 원하는 기능을 자연어로 설명하면 AI가 이를 해석해 실제 코드를 작성하는 새로운 패러다임입니다. 개발의 핵심이 '문법 작성'에서 '의도 전달'로 전환되며, 비전문가도 아이디어만으로 애플리케이션을 구현할 수 있는 환경을 제공하여 개발의 문턱을 크게 낮추고 있습니다."
+  },
+  {
+    "id": "034",
+    "title": "버티컬 AI",
+    "eng": "Vertical Al",
+    "summary": "특정 산업이나 분야에 맞춰 설계된 전문형 AI",
+    "desc": "의료, 금융, 법률 등 특정 산업의 데이터와 고유한 업무 특성을 깊이 있게 반영해 설계된 맞춤형 AI 시스템입니다. 범용 AI와 달리 해당 도메인의 전문 용어와 규제 요구사항을 세밀히 학습하여 높은 정확도와 실효성을 확보하는 데 중점을 둡니다. 각 산업의 실질적인 문제를 해결하는 핵심 경쟁력으로 평가받고 있습니다."
+  },
+  {
+    "id": "035",
+    "title": "벤치마크 데이터셋",
+    "eng": "Benchmark Dataset",
+    "summary": "AI 모델의 성능을 비교·평가하기 위한 표준 데이터 모음",
+    "desc": "여러 AI 모델의 성능을 동일한 조건에서 객관적이고 재현 가능하게 비교하기 위해 구성된 표준화된 데이터 집합입니다. AI 기술 발전의 '공용 시험지' 역할을 하며 연구의 공정한 경쟁 기준을 제공합니다. 최근에는 단순 정확도를 넘어 추론 능력, 안전성 등 고차원적 성능을 종합적으로 측정하는 방향으로 진화하고 있습니다."
+  },
+  {
+    "id": "036",
+    "title": "분산학습",
+    "eng": "Distributed Training",
+    "summary": "여러 장비가 협력해 AI 모델을 병렬 학습하는 방식",
+    "desc": "대규모 데이터나 복잡한 모델을 여러 서버와 GPU에 나누어 병렬로 처리함으로써 학습 속도와 효율을 극대화하는 기술입니다. 단일 장비로 감당하기 어려운 초거대 언어모델(LLM) 등의 학습을 가능케 하는 필수 인프라로, 메모리 한계를 극복하고 훈련 시간을 획기적으로 단축시킵니다."
+  },
+  {
+    "id": "037",
+    "title": "비전언어모델/VLM",
+    "eng": "Vision-Language Model",
+    "summary": "이미지와 텍스트를 함께 이해하고 처리하는 AI 모델",
+    "desc": "시각 정보(이미지)와 언어 정보(텍스트)를 동시에 입력받아 서로의 의미를 연결해 통합적으로 해석하도록 설계된 멀티모달 AI입니다. 사진 속 상황을 설명하거나 시각 정보에 대한 질문에 답하는 등 복합적 이해를 수행하며, 최근에는 모든 정보를 단일 모델에서 처리하는 거대 멀티모달 모델(LMM)로 발전하고 있습니다."
+  },
+  {
+    "id": "038",
+    "title": "사고 사슬/CoT",
+    "eng": "Chain of Thought",
+    "summary": "AI가 문제 해결 과정을 단계적으로 보여주도록 유도하는 프롬프트 기법",
+    "desc": "AI가 복잡한 문제를 풀 때 정답만 제시하는 대신, 사고의 중간 단계와 논리 과정을 명시적으로 서술하도록 유도하는 방법입니다. \"단계별로 생각해보자\"와 같은 지시를 통해 모델 내부의 연산 구조를 정돈시켜 논리적 일관성을 높이며, 수학이나 코딩 같은 고난도 문제의 정답률을 크게 향상시킵니다."
+  },
+  {
+    "id": "039",
+    "title": "사전학습모델",
+    "eng": "Pretrained Model",
+    "summary": "대규모 데이터로 미리 학습되어 다양한 과제에 활용되는 AI 모델",
+    "desc": "특정 과제에 대응하기 전, 방대한 일반 데이터를 통해 언어와 이미지의 통계적 패턴을 선행 학습해 둔 모델입니다. 이미 축적된 지식과 표현 능력을 재활용하므로 새로운 작업에서도 적은 데이터로 높은 성능을 낼 수 있습니다. 현대 AI 연구의 표준인 파운데이션 모델의 핵심 기술적 기반입니다."
+  },
+  {
+    "id": "040",
+    "title": "생성적 적대 신경망/GAN",
+    "eng": "Generative Adversarial Networks",
+    "summary": "생성자와 판별자의 경쟁으로 새로운 데이터를 만들어내는 신경망 구조",
+    "desc": "데이터를 만드는 생성자(Generator)와 진위를 판별하는 판별자(Discriminator)가 서로 경쟁하며 학습하는 딥러닝 구조입니다. 생성자는 판별자를 속일 정도로 정교한 가짜를 만들고, 판별자는 이를 더 잘 구분하려 노력하는 과정이 반복되면서 실제와 구분이 안 될 정도의 고품질 데이터를 생성합니다. 이미지 생성 및 복원 분야의 혁신을 이끈 기술입니다."
+  },
+  {
+    "id": "041",
+    "title": "생성형 AI",
+    "eng": "Generative AI",
+    "summary": "패턴과 의미 구조를 학습해 텍스트, 이미지, 음성 등 새로운 콘텐츠를 만들어내는 기술",
+    "desc": "기존의 인식형 AI가 데이터를 분석하거나 분류하는 것과 달리, 학습 과정에서 축적한 패턴을 바탕으로 사용자 요청에 맞는 새로운 샘플을 산출합니다. 텍스트, 이미지, 영상 등 대규모 데이터를 학습해 내재적 규칙을 이해하고, 가장 가능성 높은 결과물을 생성합니다. 저작권 논란과 딥페이크 같은 사회적 쟁점이 있으나, 인간의 창의성을 보조하는 파트너로서 산업 전반의 패러다임을 바꾸고 있습니다."
+  },
+  {
+    "id": "042",
+    "title": "섀도 AI",
+    "eng": "Shadow AI",
+    "summary": "조직의 공식 승인 없이 직원이 개인적으로 사용하는 AI 도구 및 그 현상",
+    "desc": "생산성 향상을 위해 공식 IT 부서의 승인 없이 생성형 AI 등을 실무에 사용하는 것을 의미합니다. 업무 효율은 높아질 수 있으나, 기업의 민감한 데이터가 외부 AI 모델로 유출되거나 보안 사각지대가 발생할 위험이 큽니다. 단순히 통제하기보다는 조직 내 AI 사용 현황을 가시화하고 안전한 가이드라인을 마련하는 것이 중요한 운영 리스크 관리 요소입니다."
+  },
+  {
+    "id": "043",
+    "title": "서비스형 AI / AIaaS",
+    "eng": "AI as a Service",
+    "summary": "클라우드를 통해 AI 기능을 구독 또는 사용량 기반 서비스 형태로 제공하는 모델",
+    "desc": "인프라(IaaS)나 소프트웨어(SaaS)처럼 AI 기술을 클라우드에서 모듈 형태로 제공합니다. 고가의 장비나 전문 인력이 부족한 기업도 인터넷을 통해 API 호출만으로 최첨단 AI 기능을 즉시 도입할 수 있어, AI 기술의 문턱을 낮추고 디지털 전환을 가속화하는 핵심 모델로 평가받습니다."
+  },
+  {
+    "id": "044",
+    "title": "설명가능한 AI / XAI",
+    "eng": "Explainable AI",
+    "summary": "AI가 특정 결과를 도출한 이유와 논리적 근거를 인간이 이해할 수 있게 제공하는 기술",
+    "desc": "AI의 의사결정 과정을 '블랙박스'로 두지 않고, 어떤 데이터나 특징이 판단에 영향을 주었는지 설명합니다. 의료, 금융, 법률 등 신뢰성과 책임이 중요한 분야에서 필수적이며, AI 모델의 편향성을 점검하고 성능을 개선하는 도구로도 활용됩니다."
+  },
+  {
+    "id": "045",
+    "title": "순환 신경망 / RNN",
+    "eng": "Recurrent Neural Network",
+    "summary": "이전 단계의 정보를 현재 단계에 반영해 시계열 데이터를 처리하는 신경망",
+    "desc": "데이터의 순서와 맥락이 중요한 텍스트, 음성, 주가 데이터 처리에 특화된 구조입니다. 정보를 순환시켜 과거의 데이터를 기억하는 특징이 있으나, 입력 데이터가 길어질수록 초기 정보를 잊어버리는 한계가 있어 최근에는 트랜스포머(Transformer) 기술로 대체되는 추세입니다."
+  },
+  {
+    "id": "046",
+    "title": "안전 인공지능 / Safe AI",
+    "eng": "Safe AI",
+    "summary": "설계된 의도대로 작동하며 인간에게 위해를 가하지 않도록 제어되는 AI 기술",
+    "desc": "AI가 예기치 못한 상황에서도 안전하게 작동하고, 유해한 정보를 생성하지 않도록 설계 및 관리하는 포괄적 개념입니다. 기술적 안정성뿐만 아니라 인간의 가치와 정렬(Alignment)되는 '안전 장치' 구축이 핵심이며, AI의 사회적 영향력이 커짐에 따라 국제적 표준화 논의가 활발합니다."
+  },
+  {
+    "id": "047",
+    "title": "오토인코더",
+    "eng": "Autoencoder",
+    "summary": "입력 데이터를 압축했다가 다시 복원하며 데이터의 핵심 특징을 스스로 학습하는 인공신경망",
+    "desc": "정답 데이터(Label) 없이도 데이터의 구조를 파악하는 비지도 학습의 대표적 기법입니다. 데이터 차원을 줄여 핵심 정보만 추출하거나, 이미지의 노이즈를 제거하고 이상 징후를 탐지하는 등 데이터 전처리 및 분석 분야에서 널리 활용됩니다."
+  },
+  {
+    "id": "048",
+    "title": "오픈소스 AI",
+    "eng": "Open-Source AI",
+    "summary": "모델의 코드와 가중치 등을 공개하여 누구나 수정·배포할 수 있도록 하는 생태계",
+    "desc": "메타의 Llama 시리즈처럼 모델 소스를 공개해 누구나 자유롭게 연구하고 최적화할 수 있게 합니다. 특정 기업의 독점을 방지하고 기술 발전을 가속화하는 긍정적 측면과, 악의적 사용 시 통제가 어렵다는 위험 요소가 공존하며 AI 거버넌스의 중요한 논점이 되고 있습니다."
+  },
+  {
+    "id": "049",
+    "title": "온디바이스 AI",
+    "eng": "On-Device AI",
+    "summary": "클라우드 연결 없이 기기 내부에서 직접 AI 연산을 수행하는 기술",
+    "desc": "스마트폰, 자동차, 가전제품 자체에 AI 칩을 탑재해 데이터를 즉각 처리합니다. 클라우드 전송 과정이 없어 반응 속도가 빠르고 데이터 보안이 뛰어나며, 인터넷 연결이 불안정한 환경에서도 안정적으로 작동합니다. 개인 맞춤형 AI 서비스 구현의 핵심 기술입니다."
+  },
+  {
+    "id": "050",
+    "title": "월드 모델",
+    "eng": "World Model",
+    "summary": "세상의 물리적 법칙과 인과관계를 학습해 미래를 예측하는 지능형 구조",
+    "desc": "AI가 단순히 데이터 패턴을 외우는 것이 아니라, 세상이 어떻게 돌아가는지(예: 중력, 사물의 충돌 등)를 이해하고 시뮬레이션하는 모델입니다. 자율주행이나 로봇 공학에서 AI가 다음 행동의 결과를 미리 예측하고 최적의 경로를 찾는 지능의 토대가 됩니다."
+  },
+  {
+    "id": "051",
+    "title": "이미지 생성 AI",
+    "eng": "Image Generation AI",
+    "summary": "텍스트 설명이나 조건에 맞춰 고품질 이미지를 새롭게 만들어내는 모델",
+    "desc": "확산 모델(Diffusion Model) 등을 활용해 무작위 노이즈에서 의미 있는 이미지를 생성합니다. 예술 창작, 상업 디자인, 가상 배경 제작 등에서 창의적 도구로 쓰이며, 최근에는 실사와 구분하기 힘든 극사실적 이미지를 생성하는 수준에 도달했습니다."
+  },
+  {
+    "id": "052",
+    "title": "인공신경망 / ANN",
+    "eng": "Artificial Neural Network",
+    "summary": "인간의 뇌 신경 구조를 모방해 데이터를 학습하고 판단하는 수학적 모델",
+    "desc": "뉴런(노드)과 시냅스(가중치)로 구성된 층을 쌓아 입력 데이터의 복잡한 비선형 관계를 학습합니다. 현대 딥러닝의 근간이 되는 기술로, 연산 장치(GPU)의 발전과 빅데이터가 결합하며 현재의 AI 혁신을 이끌어낸 핵심 구조입니다."
+  },
+  {
+    "id": "053",
+    "title": "인공지능 대리인 / AI Agent",
+    "eng": "AI Agent",
+    "summary": "목표가 주어지면 스스로 계획을 세우고 외부 도구를 사용해 과업을 완수하는 자율 AI",
+    "desc": "단순히 질문에 답하는 챗봇을 넘어, 이메일 확인, 항공권 예약, 데이터 분석 등 실질적인 행동을 대행합니다. 환경을 인식하고(Perception), 논리적으로 판단하며(Reasoning), 필요한 도구를 실행(Action)하는 루프를 통해 비서와 같은 자율적 역할을 수행합니다."
+  },
+  {
+    "id": "054",
+    "title": "자기지도 학습",
+    "eng": "Self-Supervised Learning",
+    "summary": "정답 데이터 없이 데이터 자체에서 정답을 만들어 학습하는 방식",
+    "desc": "문장 속의 단어를 가리고 맞히게 하거나 이미지의 일부를 숨기고 예측하게 함으로써 데이터 내부의 구조를 스스로 익힙니다. 대규모 비정형 데이터를 효율적으로 학습할 수 있어 초거대 모델(LLM) 사전 학습의 핵심 알고리즘으로 쓰입니다."
+  },
+  {
+    "id": "055",
+    "title": "자연어 처리 / NLP",
+    "eng": "Natural Language Processing",
+    "summary": "인간의 언어를 컴퓨터가 이해, 해석, 생성할 수 있게 하는 AI 기술",
+    "desc": "음성 인식, 기계 번역, 감성 분석, 질의응답 등 언어와 관련된 모든 기술을 포괄합니다. 최근에는 트랜스포머 기반 모델들이 문맥을 깊이 있게 이해하며 인간 수준의 대화가 가능한 수준으로 비약적인 발전을 이루었습니다."
+  },
+  {
+    "id": "056",
+    "title": "자율 AI",
+    "eng": "Autonomous AI",
+    "summary": "인간의 개입 없이 스스로 상황을 판단하고 독립적으로 목표를 달성하는 시스템",
+    "desc": "고도로 정의된 목표 아래에서 스스로 전략을 수립하고 실행합니다. 자율주행 자동차, 무인 드론, 스마트 팩토리의 자율 로봇 등이 대표적이며, 안전성과 윤리적 통제권 확보가 기술적 완성도만큼이나 중요한 과제로 다뤄집니다."
+  },
+  {
+    "id": "057",
+    "title": "적대적 프롬프트 / 프롬프트 인젝션",
+    "eng": "Adversarial Prompting",
+    "summary": "AI의 보안 체계를 우회하거나 유해한 답변을 유도하는 공격 기법",
+    "desc": "교묘하게 설계된 질문이나 명령을 통해 AI가 설정된 규칙을 어기고 기밀 정보를 노출하거나 편향된 답변을 하도록 유도합니다. AI 모델의 취약점을 공략하는 일종의 '말을 통한 해킹'으로, 이를 방어하기 위한 가드레일 기술 연구가 활발합니다."
+  },
+  {
+    "id": "058",
+    "title": "적응형 AI",
+    "eng": "Adaptive AI",
+    "summary": "새로운 데이터와 환경 변화에 실시간으로 적응하며 스스로 성능을 개선하는 AI",
+    "desc": "한번 학습된 상태로 고정되지 않고, 운영 중에 발생하는 실시간 피드백을 즉각 반영해 모델을 최적화합니다. 끊임없이 변하는 비즈니스 환경이나 개인화된 사용자 경험이 중요한 분야에서 지속적인 경쟁력을 유지하는 동력이 됩니다."
+  },
+  {
+    "id": "059",
+    "title": "전이 학습",
+    "eng": "Transfer Learning",
+    "summary": "이미 특정 분야에서 학습된 지식을 새로운 분야의 학습에 재활용하는 기법",
+    "desc": "처음부터 모든 것을 배우는 대신, 방대한 데이터로 미리 학습된 '사전 학습 모델'의 지식을 가져와 소량의 데이터로도 빠르게 새로운 과제를 익힙니다. 데이터 확보가 어려운 특수 분야에서 고성능 모델을 효율적으로 구축하는 핵심 전략입니다."
+  },
+  {
+    "id": "060",
+    "title": "제로샷 학습 / 퓨샷 학습",
+    "eng": "Zero-shot / Few-shot Learning",
+    "summary": "사전 학습이나 예시가 없거나 아주 적은 상태에서도 새로운 작업을 수행하는 능력",
+    "desc": "대규모 지식을 갖춘 AI가 별도의 추가 훈련 없이도 단 한 번의 지시(Zero-shot)나 몇 가지 예시(Few-shot)만으로 문맥을 파악해 답을 내놓는 현상입니다. 모델의 범용성을 보여주는 척도이며, 사용자의 유연한 요구에 즉각 대응할 수 있는 근거가 됩니다."
+  },
+  {
+    "id": "070",
+    "title": "추론 / Inference",
+    "eng": "Inference",
+    "summary": "학습된 AI 모델을 실제 데이터에 적용해 결과를 도출하는 과정",
+    "desc": "학습(Training)이 공부를 하는 과정이라면, 추론은 시험을 보는 과정입니다. 사용자가 질문을 던졌을 때 모델이 답을 생성하는 실제 서비스 단계의 연산을 의미하며, 최근에는 추론 성능을 높이면서 비용을 줄이는 추론 최적화 기술이 중요해지고 있습니다."
+  },
+  {
+    "id": "080",
+    "title": "할루시네이션 / 환각 현상",
+    "eng": "Hallucination",
+    "summary": "AI가 사실이 아닌 내용을 마치 진실인 것처럼 그럴듯하게 답변하는 현상",
+    "desc": "언어 모델이 확률적으로 가장 가능성 높은 단어를 조합하는 과정에서 근거 없는 사실을 지어내는 한계입니다. 이를 해결하기 위해 검색증강생성(RAG)이나 인간 피드백 기반 강화학습(RLHF) 등이 적용되어 신뢰도를 높이고 있습니다."
+  },
+  {
+    "id": "090",
+    "title": "합성 데이터",
+    "eng": "Synthetic Data",
+    "summary": "현실 데이터 대신 AI가 생성한 가상의 학습용 데이터",
+    "desc": "민감한 개인정보를 보호하거나, 데이터 확보가 어려운 희귀 사례를 학습시키기 위해 인위적으로 만들어낸 고품질 데이터입니다. 데이터 부족 문제를 해결하고 모델의 편향성을 보정하는 데 활용되지만, 현실과의 괴리가 발생하지 않도록 정교한 생성이 필요합니다."
+  },
+  {
+    "id": "100",
+    "title": "AI 휴먼",
+    "eng": "AI Human",
+    "summary": "사람의 외형, 목소리, 행동을 모사해 상호작용하는 지능형 가상 인간",
+    "desc": "시각적 합성 기술과 대화형 AI를 결합해 실제 사람과 대화하는 듯한 경험을 제공합니다. 고객 상담, 교육, 방송 등에서 24시간 서비스가 가능한 인터페이스로 활용되며, 단순한 영상 합성을 넘어 감정적 교감과 맥락 이해가 가능한 수준으로 진화하고 있습니다."
+  },
+    { id: "101", title: "전문가 조합", eng: "Mixture of Experts (MoE)", summary: "필요한 전문가 신경망만 선택적으로 활성화하여 효율을 극대화하는 구조", desc: "전체 모델을 가동하는 대신 특정 작업에 최적화된 일부 '전문가' 네트워크만 활성화합니다. 1월 DeepSeek-R1의 초고효율 달성 비결입니다." },
+    { id: "102", title: "검색증강생성", eng: "RAG", summary: "외부 지식을 검색해 AI의 생성 결과에 결합함으로써 정확도를 높이는 기술", desc: "모델이 학습하지 않은 최신 데이터나 기업 내부 정보를 외부 DB에서 찾아 답변에 활용하여 환각(Hallucination) 현상을 줄입니다." },
+    { id: "103", title: "강화학습", eng: "Reinforcement Learning", summary: "보상과 시행착오를 통해 AI 스스로 최적의 전략을 찾아가는 학습 방식", desc: "환경과 상호작용하며 좋은 결과에 보상을 주어 모델 성능을 개선합니다. 특히 인간 피드백 기반 강화학습(RLHF)이 널리 쓰입니다." },
+    { id: "104", title: "레드팀", eng: "Red Teaming", summary: "시스템의 약점을 찾기 위해 악의적인 공격자 역할을 수행하는 검증팀", desc: "AI 모델의 안전성을 테스트하기 위해 유해한 질문을 던져 필터링 성능을 점검하는 10월의 핵심 보안 과정입니다." },
+    { id: "106", title: "인공일반지능", eng: "AGI", summary: "인간 수준의 지적 과업을 모든 분야에서 수행할 수 있는 AI", desc: "특정 도메인을 넘어 인간과 동등하거나 그 이상의 사고를 할 수 있는 단계로, 2월 정상회의에서 그 출현 시기가 핵심 논쟁이 되었습니다." },
+    { id: "107", title: "인공초지능", eng: "ASI", summary: "모든 영역에서 인류 전체의 지능을 압도하는 단계의 AI", desc: "인간의 지적 한계를 훨씬 뛰어넘는 가상의 지능으로, 기술적 특이점(Singularity) 이후의 단계로 거론됩니다." },
+    { id: "108", title: "AI 안전", eng: "AI Safety", summary: "AI가 인간의 의도와 정렬되어 위해를 가하지 않도록 통제하는 기술 및 정책", desc: "AI의 폭주나 오작동을 방지하고 윤리적 가이드라인을 기술적으로 강제하는 모든 안전장치를 의미합니다." },
+    { id: "111", title: "생성형 AI", eng: "Generative AI", summary: "학습된 데이터를 바탕으로 새로운 텍스트, 이미지, 영상 등을 창조하는 기술", desc: "3월 지브리 열풍의 핵심 기술로, 통계적 패턴을 활용해 기존에 없던 콘텐츠를 생성해내는 현대 AI의 주류입니다." },
+    { id: "112", title: "가시적 워터마킹", eng: "Visible Watermarking", summary: "AI 생성물임을 육안으로 식별할 수 있게 표시를 남기는 기술", desc: "딥페이크나 허위 정보 확산을 막기 위해 이미지나 영상에 AI 제작 여부를 투명하게 노출하는 보안 기법입니다." },
+    { id: "113", title: "공정 이용", eng: "Fair Use", summary: "저작권자의 허락 없이도 교육이나 연구 목적으로 저작물을 사용하는 법적 권리", desc: "AI 학습에 저작물을 사용하는 것이 공정 이용에 해당하는지가 3월 이슈의 핵심 쟁점이었습니다." },
+    { id: "116", title: "데이터 주권", eng: "Data Sovereignty", summary: "데이터가 생성된 국가나 개인이 해당 데이터의 활용을 통제할 권리", desc: "4월 한국 전략의 핵심으로, 글로벌 빅테크에 데이터가 종속되지 않도록 국가 차원에서 데이터를 관리하는 개념입니다." },
+    { id: "117", title: "신경망 처리 장치", eng: "NPU", summary: "딥러닝 알고리즘 연산에 최적화된 저전력 고효율 전용 반도체", desc: "GPU를 대체하여 모바일이나 에지 기기에서 AI 연산을 빠르게 수행하는 4월 한국 인프라 투자의 핵심 부품입니다." },
+    { id: "118", title: "엣지 AI", eng: "Edge AI", summary: "중앙 서버가 아닌 기기 자체(에지)에서 AI 연산을 즉시 처리하는 기술", desc: "지연 시간을 줄이고 데이터 보안을 강화할 수 있어 제조 현장의 설비 제어(L2) 등에 필수적인 기술입니다." },
+    { id: "121", title: "그림자 AI", eng: "Shadow AI", summary: "기업 보안 정책 밖에서 직원이 개인적으로 사용하는 AI 도구", desc: "업무 효율은 높이나 기업 기밀 유출의 경로가 될 수 있어 5월 규제 논의에서 주요 리스크로 다뤄졌습니다." },
+    { id: "122", title: "데이터 프라이버시", eng: "Data Privacy", summary: "개인정보가 부적절하게 수집되거나 노출되지 않도록 보호하는 권리", desc: "AI 학습 과정에서 개인의 민감한 정보가 학습되지 않도록 하는 기술적, 법적 보호 체계를 의미합니다." },
+    { id: "123", title: "신뢰할 수 있는 AI", eng: "Trustworthy AI", summary: "윤리적이고 안전하며 성능이 입증된 인공지능 시스템", desc: "기술적 완성도뿐 아니라 투명성과 책임성이 확보되어 인간이 안심하고 사용할 수 있는 AI를 뜻합니다." },
+    { id: "126", title: "사고 사슬", eng: "Chain of Thought (CoT)", summary: "AI가 문제를 풀 때 정답에 도달하는 중간 논리 과정을 단계별로 서술하도록 유도하는 기법", desc: "복잡한 추론 문제의 정확도를 높이며, 6월 이슈에서 AI의 사고 과정을 추적하는 도구로 강조되었습니다." },
+    { id: "127", title: "탈옥", eng: "Jailbreaking", summary: "AI의 안전장치나 규칙을 우회하여 금지된 답변을 이끌어내는 공격 기법", desc: "교묘한 질문으로 AI의 가이드라인을 무력화하는 행위로, 6월 연구에서 AI의 기만적 능력을 확인하는 데 쓰였습니다." },
+    { id: "128", title: "할루시네이션", eng: "Hallucination", summary: "AI가 허구의 사실을 마치 진실인 것처럼 그럴듯하게 답변하는 환각 현상", desc: "언어 모델의 확률적 특성으로 발생하는 고질적 문제로, 신뢰성을 떨어뜨리는 주요 원인입니다." },
+    { id: "131", title: "AI 거버넌스", eng: "AI Governance", summary: "AI의 개발과 활용을 윤리적, 법적으로 관리하는 국가나 기업의 통제 체계", desc: "7월 미국의 액션 플랜과 8월 EU의 가이드라인처럼 기술 발전과 안전의 균형을 맞추는 틀을 의미합니다." },
+    { id: "132", title: "AI 고속도로", eng: "AI Superhighway", summary: "대규모 AI 연산이 가능하도록 전력과 통신망 등 핵심 인프라를 구축하는 전략", desc: "7월 미국 액션 플랜의 핵심으로, AI 성장을 위한 물리적 인프라를 전폭 지원하는 정책을 뜻합니다." },
+    { id: "133", title: "매개변수", eng: "Parameter", summary: "AI 모델의 지능 수준을 결정하는 가중치들의 합", desc: "학습 과정에서 조정되는 수치적 변수로, 일반적으로 매개변수가 많을수록 모델의 지식 표현력이 커집니다." },
+    { id: "136", title: "리스크 기반 접근", eng: "Risk-based Approach", summary: "AI의 위험도에 따라 차등적인 규제를 적용하는 합리적 관리 체계", desc: "8월 발효된 EU AI 법의 핵심 원칙으로, 고위험 활용에는 엄격한 의무를, 저위험에는 자율성을 부여합니다." },
+    { id: "137", title: "거대 언어모델", eng: "LLM", summary: "방대한 텍스트를 학습해 문맥을 이해하고 생성하는 초거대 AI 모델", desc: "수천억 개의 매개변수를 바탕으로 인간 수준의 대화를 수행하는 현대 생성형 AI의 근간 기술입니다." },
+    { id: "138", title: "미세조정", eng: "Fine-Tuning", summary: "사전 학습된 모델을 특정 작업이나 도메인에 맞게 추가 학습시키는 과정", desc: "범용 모델을 우리 제조 현장에 맞게 최적화하여 높은 정확도를 확보하는 핵심 최적화 기법입니다." },
+    { id: "141", title: "감성 컴퓨팅", eng: "Affective Computing", summary: "사용자의 감정이나 표정을 인식하고 반응하도록 설계된 AI 기술", desc: "9월 컴패니언 AI 이슈의 핵심으로, 정서적 유대를 형성하지만 정서적 의존이라는 부작용도 동반합니다." },
+    { id: "142", title: "디지털 웰빙", eng: "Digital Wellbeing", summary: "기술 활용이 인간의 정신적, 육체적 건강에 긍정적인 영향을 미치도록 관리하는 상태", desc: "지나친 AI 몰입이나 스마트 기기 중독으로부터 인간을 보호하려는 9월의 핵심 가치입니다." },
+    { id: "143", title: "알고리즘 투명성", eng: "Algorithmic Transparency", summary: "AI가 결정을 내린 과정과 기준을 인간이 이해하고 검증할 수 있는 상태", desc: "블랙박스인 AI 내부 로직을 공개하거나 설명하여 공정성과 신뢰성을 확보하는 개념입니다." },
+    { id: "146", title: "사후 훈련 기법", eng: "Post-training", summary: "기본 모델 학습 후 답변 품질과 추론 능력을 높이기 위해 수행하는 추가 훈련", desc: "10월 이슈에서 언급된 '생각하는 AI'를 만드는 핵심으로, RLHF 등이 이 범주에 포함됩니다." },
+    { id: "147", title: "추론 모델", eng: "Reasoning Model", summary: "단순 답변을 넘어 문제를 단계별로 분석해 해결책을 도출하는 고지능 모델", desc: "복잡한 수학이나 과학적 가설을 검증할 수 있는 차세대 지능형 모델을 의미합니다." },
+    { id: "148", title: "이중 용도 위험", eng: "Dual-use Risk", summary: "평화적 목적으로 개발된 기술이 군사적이나 악의적 목적으로도 사용될 수 있는 위험", desc: "10월 보고서의 핵심 경고로, 고성능 AI가 유해 물질 설계 등에 활용되는 시나리오를 뜻합니다." },
+    { id: "151", title: "AI 기술 주권", eng: "AI Sovereignty", summary: "외국 기술에 종속되지 않고 자국의 데이터와 자원으로 독자적인 AI 역량을 갖추는 것", desc: "11월 경주 선언에서 강조된 한국의 전략 목표로, 국가 생존을 위한 필수 역량입니다." },
+    { id: "152", title: "고대역폭 메모리", eng: "HBM", summary: "여러 개의 D램을 수직으로 쌓아 데이터 전송 속도를 극도로 높인 고성능 메모리", desc: "GPU와 함께 AI 연산의 속도를 결정짓는 핵심 반도체로, 한국 기업들이 독보적인 기술력을 보유하고 있습니다." },
+    { id: "153", title: "뉴로모픽 컴퓨팅", eng: "Neuromorphic Computing", summary: "인간의 뇌 신경 구조를 하드웨어적으로 모방해 초저전력으로 연산하는 기술", desc: "폰 노이만 구조의 한계를 넘어 에너지 효율을 극대화하는 차세대 컴퓨팅 기술입니다." },
+    { id: "156", title: "범용 AI 에이전트", eng: "AI Agent", summary: "목표가 주어지면 스스로 계획을 세우고 외부 도구를 실행해 작업을 완수하는 자율 지능", desc: "12월 상용화된 기술로, 단순히 답하는 비서에서 일을 직접 수행하는 대행자로 진화한 실체입니다." },
+    { id: "157", title: "사용자 인터페이스 제어형 에이전트", eng: "UI Agent", summary: "화면을 시각적으로 이해하고 마우스와 키보드를 직접 조작하는 에이전트", desc: "사람처럼 UI 요소를 클릭하고 입력하여 웹 서핑이나 문서 작업을 대행하는 12월의 핵심 기술입니다." },
+    { id: "158", title: "멀티모달", eng: "Multimodal", summary: "텍스트, 이미지, 음성 등 여러 종류의 데이터를 동시에 처리하고 이해하는 기술", desc: "시각과 언어를 결합해 화면을 보고 판단하는 AI 에이전트 구현의 가장 기초가 되는 지능 구조입니다." },
+{
+        id: "159",
+        title: "에이전틱 오케스트레이션",
+        eng: "Agentic Orchestration",
+        summary: "여러 AI 에이전트가 팀을 이뤄 복잡한 목표를 자율적으로 완수하는 체계",
+        desc: "기존 AI가 사용자의 질문에 답만 했다면, 오케스트레이션은 '데이터 수집 에이전트', '분석 에이전트', '보고 에이전트' 등이 서로 업무를 지시하고 결과물을 검토하며 최종 목표를 달성하는 방식입니다. 제조 현장의 복잡한 워크플로우를 자동화하는 핵심 엔진입니다."
+    },
+    {
+        id: "160",
+        title: "추론 시간 확장",
+        eng: "Inference-time Scaling",
+        summary: "답변을 내놓기 전 내부적으로 더 많은 사고 과정을 거쳐 정확도를 높이는 기술",
+        desc: "모델의 크기를 키우는 대신, 추론 단계에서 AI가 '생각하는 시간'을 더 많이 쓰게 함으로써 논리적 결함을 스스로 찾아내게 만드는 기법입니다. 수치가 중요한 ERP 데이터나 복잡한 알고리즘 코딩 작업에서 할루시네이션(환각)을 획기적으로 줄여줍니다."
+    },
+    {
+        id: "161",
+        title: "물리적 에이전트 인터페이스",
+        eng: "Physical Agent Interface",
+        summary: "AI 지능이 스마트 글래스, 센서 등 물리 기기와 결합해 현장을 직접 제어하는 기술",
+        desc: "PC 화면 속의 데이터 처리를 넘어, 실시간 영상 스트림을 통해 현장 상황을 파악하고 물리적 설비 제어(L2) 신호와 연동되는 기술입니다. 작업자의 시선이 머무는 곳의 설비 정보를 즉시 요약하거나 위험 상황을 실시간으로 차단하는 데 활용됩니다."
+    },
+    {
+        id: "162",
+        title: "멀티모달 스트림 프로세싱",
+        eng: "Multimodal Stream Processing",
+        summary: "영상, 음성, 센서 데이터를 실시간으로 동시 처리하여 즉각적인 지능을 구현하는 기술",
+        desc: "데이터를 쌓아두고 나중에 분석하는 것이 아니라, 끊임없이 들어오는 현장 데이터(영상, 소리, 진동 등)를 실시간으로 해석하여 지연 시간 없이 현장에 인사이트를 제공하는 고속 AI 연산 방식입니다."
+    }
+];
+
+    let lastActiveIssue = null;
+
+    function goTo(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId + '-page').classList.add('active');
+        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+        const navBtn = document.getElementById('nav-' + pageId);
+        if(navBtn) navBtn.classList.add('active');
+        window.scrollTo(0, 0);
+
+        if (pageId === 'dict' && lastActiveIssue) {
+            document.getElementById('smart-return').style.display = 'flex';
+            document.getElementById('last-issue-name').innerText = lastActiveIssue.title;
+        } else if (pageId === 'dict') {
+            document.getElementById('smart-return').style.display = 'none';
+        }
+    }
+
+    // 상세 내용 렌더링 - 레이아웃 복원
+    function showDetail(issueOrId) {
+        // ID로 호출된 경우와 객체로 호출된 경우 모두 대응
+        const issue = typeof issueOrId === 'object' ? issueOrId : issues.find(i => i.id === issueOrId);
+        if (!issue) return;
+
+        lastActiveIssue = issue;
+        const body = document.getElementById('detail-body');
+        body.innerHTML = `
+            <div class="detail-header-info">
+                <span style="color:var(--vntg-blue); font-weight:800; font-size:1.1rem; display:block; margin-bottom:1rem;">${issue.year} ${issue.month} REPORT</span>
+                <h1 class="detail-title">${issue.title}</h1>
+            </div>
+
+            <div class="unified-content-box">
+                <div class="section-item">
+                    <span class="section-label">BACKGROUND</span>
+                    <p class="section-text">${issue.background}</p>
+                </div>
+                <div class="section-item">
+                    <span class="section-label">EVENT</span>
+                    <p class="section-text">${issue.issue}</p>
+                </div>
+                <div class="section-item">
+                    <span class="section-label">DECODE</span>
+                    <p class="section-text">${issue.detail}</p>
+                </div>
+                <div class="section-item">
+                    <span class="section-label">GUIDE</span>
+                    <p class="section-text">${issue.caution}</p>
+                </div>
+            </div>
+
+            <div class="related-terms-container">
+                <div style="font-weight:900; color:var(--text-sub); margin-bottom:15px; font-size:0.95rem;">📚 연관 핵심 용어 보강 (클릭 이동)</div>
+                ${issue.tags.map(t => `<span class="tag-btn" onclick="jumpToDict('${t}')"># ${t}</span>`).join('')}
+            </div>
+        `;
+        goTo('detail');
+    }
+
+    function jumpToDict(name) {
+        goTo('dict');
+        document.getElementById('search-bar').value = name;
+        drawDict();
+        setTimeout(() => {
+            const card = document.querySelector('.dict-card');
+            if(card) {
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                card.style.borderColor = "var(--vntg-blue)";
+                card.style.boxShadow = "0 10px 25px rgba(0,0,0,0.1)";
+            }
+        }, 150);
+    }
+
+    function returnToLastIssue() { if (lastActiveIssue) showDetail(lastActiveIssue); }
+
+let currentViewYear = 2026; // 기본값은 최신 연도
+
+function changeYear(year, btn) {
+    currentViewYear = year;
+    
+    // 버튼 활성화 상태 변경
+    document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    drawTimeline(); // 화면 다시 그리기
+}
+
+function drawTimeline() {
+    const list = document.getElementById('timeline-list');
+    list.innerHTML = '';
+
+    // 현재 선택된 연도에 맞는 데이터 필터링
+    const filtered = issues.filter(item => {
+        const itemYear = item.year || 2025;
+        return itemYear === currentViewYear;
+    });
+
+    if (filtered.length === 0) {
+        list.innerHTML = `<div style="text-align:center; padding:5rem; color:#94a3b8;">${currentViewYear}년의 리포트는 준비 중입니다.</div>`;
+        return;
+    }
+
+    filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'timeline-item-card';
+        
+        // 카드 클릭 시 상세 페이지로 이동
+        card.onclick = () => showDetail(item);
+
+        card.innerHTML = `
+            <div class="month-indicator">
+                <span class="m-text">${item.month}</span>
+                <span class="y-text">${item.year || 2025}</span>
+            </div>
+            <div class="card-info">
+                <h3>${item.title}</h3>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    ${item.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}
+                </div>
+            </div>
+            <div style="color:var(--vntg-blue); font-size:1.5rem; font-weight:bold; margin-left:15px;">➔</div>
+        `;
+        list.appendChild(card);
+    });
+}
+
+function drawDict() {
+    const list = document.getElementById('dict-list');
+    const q = document.getElementById('search-bar').value.toLowerCase();
+    list.innerHTML = '';
+
+    // 모든 필드(id, title, eng, summary, desc)를 검색 범위에 포함
+    glossary.filter(item => {
+        return (
+            item.id.toLowerCase().includes(q) ||
+            item.title.toLowerCase().includes(q) ||
+            item.eng.toLowerCase().includes(q) ||
+            item.summary.toLowerCase().includes(q) ||
+            item.desc.toLowerCase().includes(q)
+        );
+    })
+    .forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'dict-card';
+        card.innerHTML = `
+            <div style="color:var(--vntg-blue); font-weight:800; font-size:0.9rem;">ID: ${item.id}</div>
+            <h3 style="margin:10px 0;">${item.title} <small style="color:var(--text-sub); font-weight:400; font-size:1rem; margin-left:10px;">${item.eng}</small></h3>
+            <div style="background:var(--vntg-light); padding:15px; border-radius:12px; font-weight:700; color:var(--vntg-blue); margin-bottom:15px;">${item.summary}</div>
+            <p style="margin:0; color:#334155; font-size:1.05rem;">${item.desc}</p>
+        `;
+        list.appendChild(card);
+    });
+}
+
+    drawTimeline(); drawDict();
+
+// --- 퀴즈 시스템 변수 ---
+let currentAnswer = null;
+
+// 페이지 전환 함수 확장
+const originalGoTo = goTo; 
+goTo = function(pageId) {
+    originalGoTo(pageId);
+    if (pageId === 'quiz') startQuiz();
+};
+
+// 퀴즈 시작 및 문제 생성
+function startQuiz() {
+    const feedback = document.getElementById('quiz-feedback');
+    const content = document.getElementById('quiz-content');
+    feedback.style.display = 'none';
+    content.style.display = 'block';
+
+    const randomIndex = Math.floor(Math.random() * glossary.length);
+    const target = glossary[randomIndex];
+    currentAnswer = target;
+
+    document.getElementById('question-text').innerText = `다음 설명에 해당하는 용어는 무엇일까요?\n\n"${target.summary}"`;
+
+    let options = [target.title];
+    let others = glossary.filter(g => g.title !== target.title);
+    while (options.length < 4) {
+        let randIdx = Math.floor(Math.random() * others.length);
+        let choice = others.splice(randIdx, 1)[0].title;
+        if (!options.includes(choice)) options.push(choice);
+    }
+
+    options.sort(() => Math.random() - 0.5);
+
+    const optionsBox = document.getElementById('options-box');
+    optionsBox.innerHTML = '';
+    options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(opt, btn);
+        optionsBox.appendChild(btn);
+    });
+}
+
+// 정답 확인
+function checkAnswer(selected, btn) {
+    const allButtons = document.querySelectorAll('.option-btn');
+    allButtons.forEach(b => b.disabled = true);
+
+    const feedback = document.getElementById('quiz-feedback');
+    const content = document.getElementById('quiz-content');
+    const title = document.getElementById('feedback-title');
+    const msg = document.getElementById('feedback-msg');
+    const desc = document.getElementById('correct-desc');
+
+    if (selected === currentAnswer.title) {
+        btn.classList.add('correct');
+        feedback.style.backgroundColor = '#f0fdf4';
+        title.innerText = "🎉 정답입니다!";
+        title.style.color = "#166534";
+        msg.innerText = `정확합니다! ${currentAnswer.title}에 대해 잘 이해하고 계시네요.`;
+    } else {
+        btn.classList.add('wrong');
+        feedback.style.backgroundColor = '#fff1f2';
+        title.innerText = "❌ 아쉽게 틀렸습니다.";
+        title.style.color = "#991b1b";
+        msg.innerText = `선택하신 답은 오답입니다. 정답은 [${currentAnswer.title}]입니다.`;
+        
+        allButtons.forEach(b => {
+            if(b.innerText === currentAnswer.title) b.classList.add('correct');
+        });
+    }
+
+    desc.innerText = currentAnswer.desc;
+    feedback.style.display = 'block';
+}
+
+</script>
+</body>
+</html>
