@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VNTG 제조사업2센터 AI 인사이트</title>
+    <title>VNTG 운영2센터 AI 인사이트</title>
     <style>
         :root {
             --vntg-blue: #1e3a8a;
@@ -129,7 +129,7 @@
             <div class="hero-section">
                 <div class="hero-text">
                     <h1>현장의 뜨거운 열기와<br><span>우리의 코드가 만날 때</span></h1>
-                    <p>VNTG 제조사업2센터 구성원 모두를 위한 지식 저장소입니다.<br>AI 기술의 거대한 변곡점과 핵심 지식들을 통해<br>제조 현장의 내일을 함께 고민합시다.</p>
+                    <p>VNTG 운영2센터 구성원 모두를 위한 지식 저장소입니다.<br>AI 기술의 거대한 변곡점과 핵심 지식들을 통해<br>제조 현장의 내일을 함께 고민합시다.</p>
                     <button class="btn-start" onclick="goTo('timeline')">인사이트 탐색하기 ➔</button>
                 </div>
                 <div class="hero-visual">
@@ -138,7 +138,7 @@
                 </div>
             </div>
             <div class="center-vision">
-                <h2><b style="color:var(--vntg-blue)">VNTG 제조사업2센터 Insight</b></h2>
+                <h2><b style="color:var(--vntg-blue)">VNTG 운영2센터 Insight</b></h2>
                 <p>우리는 제조의 시작부터 비즈니스의 완성까지 함께하는 전문가입니다.<br>어렵게 느껴지는 AI 트렌드와 핵심 키워드를 '이달의 스토리'로 명쾌하게 풀어내어,<br>센터원 구성원 누구나 AI 시대를 준비할 수 있도록 돕습니다.</p>
             </div>
         </section>
@@ -157,7 +157,6 @@
     </div>
 
     <div id="detail-page" class="page">
-        <div style="padding: 2rem 0;"><button onclick="goTo('timeline')" style="background:none; border:none; color:var(--text-sub); font-weight:bold; cursor:pointer;">← 목록으로 돌아가기</button></div>
         <div id="detail-body"></div>
     </div>
 
@@ -200,7 +199,7 @@
 
 <script>
 /* --- [DATA] 데이터 영역 --- */
-const issues = [
+const issues = [    
 {																									
 year: 2026,																									
 id: 202601,																									
@@ -211,6 +210,28 @@ title: "규범의 제도화와 피지컬 AI의 습격: '신뢰'와 '실체'의 �
 "03. 기술 심층 분석": "핵심 기술 흐름은 '월드 모델(World Model)'과 '컨피덴셜 컴퓨팅'입니다. 피지컬 AI는 물리 법칙을 이해하는 월드 모델을 통해 현실의 복잡한 상황을 추론하고 행동합니다. 또한, AI 에이전트가 개인과 기업의 민감한 데이터를 직접 다루기 시작하면서, 하드웨어 수준에서 데이터를 보호하며 연산하는 컨피덴셜 컴퓨팅 기술이 보안의 핵심 인프라로 부상했습니다.",																									
 "04. 전략적 가이드": "이제 모든 AI 프로젝트는 '신뢰성'을 기본값(Default)으로 설계해야 합니다. AI 기본법에 따른 워터마크 부착 및 고영향 AI 식별 대응 체계를 갖추는 것이 필수적입니다. 또한, 단순 챗봇 형태를 넘어 실제 물리적 기기나 외부 툴을 자율적으로 조작하는 '에이전틱 AI'로의 전환에 대비하여, API 보안과 자율 제어권에 대한 단계적 가이드라인을 수립해야 합니다.",																									
 tags: ["AI 기본법", "피지컬 AI", "고영향 AI", "월드모델", "컨피덴셜 컴퓨팅"]																									
+},
+{
+year: 2026,
+id: 202602,
+month: "2월",
+title: "에이전틱 AI의 대두: '말하는 AI'에서 '일하는 AI'로",
+"01. 이달의 스토리": "2026년 2월은 AI가 인간의 지시를 기다리지 않고 스스로 판단하여 복잡한 과업을 수행하는 '에이전틱 워크플로우(Agentic Workflow)'가 기업 현장에 본격 도입된 달입니다. 단순한 텍스트 생성을 넘어, AI가 기업의 내부 시스템과 API를 자유자재로 조작하며 스스로 오류를 수정하고 목표를 완수하는 '자율적 동료'로서의 면모를 과시하기 시작했습니다.",
+"02. 배경 및 사건": "글로벌 IT 리서치 기관들은 2026년을 'AI 에이전트 폭발의 해'로 명명했습니다. 2월 중순, 글로벌 SaaS 기업들이 자율형 AI 에이전트를 기본 탑재한 대규모 업데이트를 단행하면서, 사무직 근로자의 업무 약 30%가 AI에 의해 자율적으로 처리되기 시작했습니다. 국내에서도 주요 은행들이 단순 챗봇을 폐지하고 대출 상담부터 실행까지 전 과정을 AI 에이전트가 전담하는 'AI 뱅커 2.0'을 출시했습니다.",
+"03. 기술 심층 분석": "핵심 기술은 '추론 루프(Reasoning Loops)'와 '툴 유즈(Tool Use)'입니다. 과거 LLM이 한 번에 결과를 출력했다면, 현재의 에이전틱 AI는 문제를 여러 단계로 쪼개어 가설을 세우고 외부 툴(브라우저, 코드 인터프리터, API)을 활용해 검증합니다. 특히 모델이 스스로 생각하는 과정을 반복하는 '테스트 타임 컴퓨팅(Test-time Compute)' 기술이 비약적으로 발전하며 답변의 정확도가 비약적으로 상승했습니다.",
+"04. 전략적 가이드": "이제 기업은 AI 모델 도입보다 '디지털 권한 부여'에 집중해야 합니다. AI 에이전트가 어디까지 결제하고 결정할 수 있는지에 대한 'IAM(Identity and Access Management)' 체계를 수립하는 것이 필수적입니다. 또한, AI가 수행한 업무의 결과값을 검증하는 'AI 감사(Auditing)' 프로세스를 내재화하여 자율 실행에 따른 리스크를 최소화해야 합니다.",
+tags: ["에이전틱 AI", "자율 업무", "추론 루프", "AI 뱅커", "권한 관리"]
+},
+{
+year: 2026,
+id: 202603,
+month: "3월",
+title: "추론의 산업화와 AI 팩토리: '지능'이 생산의 표준이 되다",
+"01. 이달의 스토리": "2026년 3월은 AI가 소프트웨어를 넘어 거대한 산업 인프라로 완전히 자리 잡은 시기입니다. 실리콘밸리에서 열린 NVIDIA GTC 2026을 기점으로, 모든 공장과 데이터센터가 하나의 거대한 지능 생산 공장인 'AI 팩토리'로 진화하기 시작했습니다. 지능은 이제 전기나 물처럼 모든 산업에서 실시간으로 공급받아 사용하는 핵심 유틸리티가 되었습니다.",
+"02. 배경 및 사건": "3월 20일경, 전 세계 주요 제조 기업들이 NVIDIA의 차세대 AI 칩셋과 옴니버스(Omniverse)를 결합한 '완전 무인 AI 팩토리' 청사진을 발표했습니다. 대한민국은 이 시기에 맞춰 '국가 AI 컴퓨팅 센터'를 개소하며 중소기업들이 저비용으로 고성능 추론 모델을 사용할 수 있는 환경을 조성했습니다. 또한, SK하이닉스와 삼성전자의 HBM4E 메모리가 본격 양산되며 AI 추론 성능의 물리적 한계가 다시 한번 경신되었습니다.",
+"03. 기술 심층 분석": "기술적 화두는 '슬림 추론(Lean Inference)'과 '멀티모달 통합'입니다. 거대 모델을 경량화하여 현장에서 즉각 응답하게 만드는 '적응형 추론' 기술이 보급되었습니다. 또한 이미지, 소리, 센서 데이터를 통합하여 공정의 이상 징후를 0.01초 만에 감지하는 '온디바이스 멀티모달 AI'가 제조 및 물류 현장의 표준으로 자리 잡았습니다.",
+"04. 전략적 가이드": "기업은 자체적인 '데이터 파이프라인'을 점검해야 합니다. AI 팩토리를 운영하기 위해서는 실시간으로 쏟아지는 현장 데이터를 AI가 학습하고 추론할 수 있는 형태로 정제하는 인프라가 필수적입니다. 또한, 'AI 기반 생산성 지표'를 새롭게 정의하여, 단순 비용 절감이 아닌 AI 도입을 통한 제품 혁신 속도(Time-to-Market)를 핵심 경쟁력으로 관리해야 합니다.",
+tags: ["AI 팩토리", "NVIDIA GTC 2026", "HBM4E", "온디바이스 AI", "데이터 파이프라인"]
 },																									
 {																									
 year: 2025,																									
@@ -346,6 +367,69 @@ tags: ["AI 에이전트", "UI 제어형 에이전트", "LAM", "범용 자동화"
 }
 ]; // PDF 기반 스토리 데이터 채워넣기
 const glossary = [
+{
+    "id": "160",
+    "title": "에이전틱 AI",
+    "eng": "Agentic AI",
+    "summary": "단순 응답을 넘어 스스로 목표를 설정하고 계획을 수립하여 복사한 과업을 완수하는 자율형 인공지능",
+    "desc": "에이전틱 AI는 질문에 답만 하는 챗봇의 수준을 넘어, 사용자의 의도를 파악해 하위 작업(Task)을 스스로 생성하고 외부 도구를 조작해 결과를 만들어내는 지능체입니다. 2026년 2월, 기업 업무 환경에 본격 도입되며 단순 반복 업무의 30% 이상을 자율적으로 처리하기 시작했습니다. 스스로 오류를 수정하는 '자기 개선' 능력을 갖추고 있어, 복잡한 비즈니스 워크플로우를 완결 짓는 '디지털 동료'로 정의됩니다."
+},
+{
+    "id": "161",
+    "title": "자율 업무",
+    "eng": "Autonomous Work",
+    "summary": "인간의 지속적인 개입 없이 AI 에이전트가 판단과 실행을 주도하여 업무 프로세스를 완결하는 방식",
+    "desc": "과거의 자동화가 정해진 규칙(Rule)대로만 움직였다면, 자율 업무는 AI가 상황에 맞춰 유연하게 의사결정을 내리는 단계를 의미합니다. 재고 관리, 발주 처리, 고객 응대 등에서 AI가 전권을 가지고 실행하며, 인간은 최종 결과물을 승인하거나 예외 상황만 관리하는 '오케스트레이터' 역할을 수행하게 됩니다. 2026년 기업 경영의 핵심 지표인 'AI 가동률'과 직결되는 개념입니다."
+},
+{
+    "id": "162",
+    "title": "추론 루프",
+    "eng": "Reasoning Loops",
+    "summary": "AI가 답을 내놓기 전 내부적으로 가설 수립, 검증, 수정을 반복하며 논리적 정확도를 높이는 사고 과정",
+    "desc": "기존 LLM이 확률적으로 다음 단어를 즉시 뱉어냈다면, 추론 루프가 탑재된 모델은 '생각의 시간'을 갖습니다. 문제를 쪼개고, 스스로 논리적 모순이 없는지 검토하며, 필요시 외부 데이터를 조회해 검증하는 과정을 루프(반복) 형태로 수행합니다. 이 기술을 통해 수학, 코딩, 전략 수립 등 고도의 정밀함이 필요한 영역에서 AI의 신뢰성이 비약적으로 상승했습니다."
+},
+{
+    "id": "163",
+    "title": "AI 뱅커",
+    "eng": "AI Banker",
+    "summary": "대출 상담부터 심사, 실행까지 전 금융 과정을 자율적으로 처리하는 에이전틱 금융 지능 시스템",
+    "desc": "2026년 2월 국내 금융권을 중심으로 확산된 'AI 뱅커 2.0'은 단순 챗봇 안내를 넘어 실제 금융 거래의 주체가 됩니다. 고객의 신용 상태를 실시간 분석하고, 복잡한 금융 규제 준수 여부를 스스로 판단하여 대출 승인 여부를 결정합니다. 이는 금융 서비스의 비용을 획기적으로 낮추는 동시에, 고영향 AI로서 엄격한 법적 관리와 보안 체계를 적용받습니다."
+},
+{
+    "id": "164",
+    "title": "권한 관리",
+    "eng": "IAM for AI Agents",
+    "summary": "자율형 AI 에이전트가 접근할 수 있는 데이터 범위와 실행 가능한 작업의 한계를 규정하는 보안 체계",
+    "desc": "AI가 스스로 시스템을 조작하게 되면서, AI에게 부여된 '디지털 신분'과 '행동 권한'을 관리하는 것이 보안의 최우선 과제가 되었습니다. AI 에이전트가 기업의 기밀을 열람하거나 거액을 결제하는 등의 오남용을 막기 위해, Zero Trust 원칙에 기반하여 실시간으로 권한을 검증하고 모든 행동 로그를 기록하는 관리 인프라를 의미합니다."
+},
+{
+    "id": "165",
+    "title": "AI 팩토리",
+    "eng": "AI Factory",
+    "summary": "데이터가 원료가 되고 AI가 지능을 생산하는, 제조 공정 전체가 하나의 인공지능으로 운영되는 차세대 공장",
+    "desc": "AI 팩토리는 단순한 공정 자동화를 넘어, 공장 내 모든 설비와 로봇이 실시간으로 데이터를 공유하며 최적의 생산 경로를 스스로 결정하는 지능형 생산 거점입니다. NVIDIA GTC 2026에서 제시된 핵심 비전으로, 디지털 트윈과 피지컬 AI가 결합되어 가상 세계의 시뮬레이션 결과가 현실 공정에 즉각 반영되는 '인지형 제조'의 정점을 보여줍니다."
+},
+{
+    "id": "166",
+    "title": "NVIDIA GTC 2026",
+    "eng": "NVIDIA GTC 2026",
+    "summary": "지능의 산업화를 선언하며 차세대 AI 칩셋과 옴니버스 생태계의 진화를 공개한 세계 최대 AI 컨퍼런스",
+    "desc": "2026년 3월 개최된 GTC는 AI가 소프트웨어 도구를 넘어 국가적 인프라인 'AI 팩토리'로 진화했음을 선언한 무대였습니다. 블랙웰(Blackwell) 이후의 차세대 아키텍처와 함께 로봇 가속기, 수냉식 데이터센터 인프라 표준이 공개되었습니다. 이 행사를 통해 '추론의 대중화'와 '피지컬 AI의 상용화'가 가속화되는 계기가 마련되었습니다."
+},
+{
+    "id": "167",
+    "title": "HBM4E",
+    "eng": "High Bandwidth Memory 4E",
+    "summary": "초당 테라바이트급 데이터를 처리하며 AI의 추론 속도를 극대화하는 6세대 고대역폭 메모리 반도체",
+    "desc": "삼성전자와 SK하이닉스가 2026년 3월 본격 양산을 발표한 차세대 AI 메모리입니다. 에이전틱 AI와 피지컬 로봇이 실시간으로 방대한 데이터를 추론하기 위해서는 데이터 병목 현상이 없어야 하는데, HBM4E는 기존 대비 압도적인 대역폭과 전력 효율을 제공하여 '지능 생산 공장'의 핵심 엔진 역할을 수행합니다."
+},
+{
+    "id": "169",
+    "title": "데이터 파이프라인",
+    "eng": "Data Pipeline",
+    "summary": "현장의 원시 데이터를 수집, 정제하여 AI가 즉시 추론하거나 학습할 수 있는 지능 데이터로 변환하는 자동화 통로",
+    "desc": "AI 팩토리가 원활하게 돌아가기 위해서는 수조 개의 센서 데이터를 AI가 이해할 수 있는 형태로 실시간 공급해야 합니다. 수집(Ingest)부터 가공(Transform), 저장(Load)에 이르는 전 과정이 중단 없이 흐르도록 설계된 인프라를 의미하며, 2026년의 데이터 파이프라인은 AI가 스스로 데이터의 품질을 검수하고 보정하는 '지능형 정제' 기능이 포함됩니다."
+},    
 {
     "id": "149",
     "title": "AI 페르소나",
@@ -1342,8 +1426,9 @@ let lastActiveIssue = null;
 let currentViewYear = 2026;
 let currentAnswer = null;
 
-/* --- [LOGIC] 네비게이션 --- */
-function goTo(pageId) {
+
+/* 페이지 이동 및 URL 업데이트 */
+function goTo(pageId, noPush = false) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const target = document.getElementById(pageId + '-page');
     if(target) target.classList.add('active');
@@ -1354,6 +1439,14 @@ function goTo(pageId) {
 
     window.scrollTo(0, 0);
 
+    // 주소창에 ?page=페이지이름 표시
+    if (!noPush) {
+        const url = new URL(window.location);
+        url.searchParams.set('page', pageId);
+        if (pageId !== 'detail') url.searchParams.delete('id'); // 상세페이지 아니면 ID 삭제
+        history.pushState({ page: pageId }, '', url);
+    }
+
     if (pageId === 'dict') {
         const banner = document.getElementById('smart-return');
         if (lastActiveIssue) {
@@ -1363,6 +1456,7 @@ function goTo(pageId) {
     }
     if (pageId === 'quiz') startQuiz();
 }
+
 
 /* --- [LOGIC] 타임라인 --- */
 function changeYear(year, btn) {
@@ -1396,13 +1490,28 @@ function drawTimeline() {
     });
 }
 
-/* --- [LOGIC] 상세 페이지 --- */
-function showDetail(issueOrId) {
+
+/* 상세 페이지 표시 및 URL 업데이트 */
+function showDetail(issueOrId, noPush = false) {
     const issue = typeof issueOrId === 'object' ? issueOrId : issues.find(i => i.id == issueOrId);
     if (!issue) return;
     lastActiveIssue = issue;
+
+    // URL 업데이트
+    if (!noPush) {
+        const url = new URL(window.location);
+        url.searchParams.set('page', 'detail');
+        url.searchParams.set('id', issue.id);
+        history.pushState({ page: 'detail', id: issue.id }, '', url);
+    }
+
     const body = document.getElementById('detail-body');
+    
+    // 버튼과 내용을 여기서 한꺼번에 생성합니다.
     body.innerHTML = `
+        <div style="padding: 2rem 0;">
+            <button onclick="goTo('timeline')" style="background:none; border:none; color:var(--text-sub); font-weight:bold; cursor:pointer;">← 목록으로 돌아가기</button>
+        </div>
         <div style="margin-bottom:2.5rem; border-bottom:2px solid var(--vntg-blue); padding-bottom:1.5rem;">
             <span style="color:var(--vntg-blue); font-weight:800;">${issue.year} ${issue.month} REPORT</span>
             <h1 style="font-size:2.5rem; margin:10px 0;">${issue.title}</h1>
@@ -1420,8 +1529,10 @@ function showDetail(issueOrId) {
             ${(issue.tags || []).map(t => `<span class="tag-btn" onclick="jumpToDict('${t}')"># ${t}</span>`).join('')}
         </div>
     `;
-    goTo('detail');
+    goTo('detail', true); 
 }
+
+
 
 /* --- [LOGIC] 사전 (검색어 삭제 기능 포함) --- */
 function handleSearchInput() {
@@ -1622,6 +1733,32 @@ function startQuiz() {
 }
 
 window.onload = () => { drawTimeline(); drawDict(); };
+
+/* 브라우저 뒤로가기 버튼 클릭 시 처리 */
+window.onpopstate = function() {
+    initRouting();
+};
+
+/* 주소창의 정보를 읽어서 해당 페이지를 보여줌 */
+function initRouting() {
+    const params = new URLSearchParams(window.location.search);
+    const page = params.get('page') || 'home';
+    const id = params.get('id');
+
+    if (page === 'detail' && id) {
+        showDetail(id, true); // 특정 이슈 ID가 있으면 상세화면으로
+    } else {
+        goTo(page, true); // 그 외에는 해당 탭으로
+    }
+}
+
+/* 페이지가 처음 켜질 때 실행 */
+window.onload = () => { 
+    drawTimeline(); 
+    drawDict(); 
+    initRouting(); // 추가된 부분: 접속 시 URL 확인
+};
+
 </script>
 </body>
 </html>
